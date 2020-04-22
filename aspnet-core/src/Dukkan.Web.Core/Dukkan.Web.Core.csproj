@@ -14,7 +14,7 @@
     <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <OpenApiGenerateDocuments>false</OpenApiGenerateDocuments>
-    <RootNamespace>Dukkan</RootNamespace>
+    <RootNamespace>Dukkan.Web</RootNamespace>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -23,9 +23,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.3" />
     <PackageReference Include="Abp.AspNetCore" Version="5.4.0" />
     <PackageReference Include="Abp.ZeroCore" Version="5.4.0" />
     <PackageReference Include="Abp.AspNetCore.SignalR" Version="5.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="5.3.3" />
   </ItemGroup>
 </Project>

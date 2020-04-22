@@ -1,7 +1,7 @@
 ﻿using Abp.AutoMapper;
-using Dukkan.Authentication.External;
+using Dukkan.Web.Authentication.External;
 
-namespace Dukkan.Models.TokenAuth
+namespace Dukkan.Web.Models.TokenAuth
 {
     [AutoMapFrom(typeof(ExternalLoginProviderInfo))]
     public class ExternalLoginProviderInfoModel

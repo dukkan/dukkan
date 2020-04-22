@@ -1,4 +1,4 @@
-﻿namespace Dukkan.Models.TokenAuth
+﻿namespace Dukkan.Web.Models.TokenAuth
 {
     public class ExternalAuthenticateResultModel
     {

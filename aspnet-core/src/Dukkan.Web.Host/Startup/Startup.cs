@@ -16,10 +16,12 @@ using Dukkan.Identity;
 using Abp.AspNetCore.SignalR.Hubs;
 using Abp.Dependency;
 using Abp.Json;
+using Dukkan.Web.Configuration;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
+using Dukkan.Web.Swagger;
 
-namespace Dukkan.Web.Host.Startup
+namespace Dukkan.Web.Startup
 {
     public class Startup
     {
@@ -78,7 +80,11 @@ namespace Dukkan.Web.Host.Startup
             {
                 options.SwaggerDoc("v1", new OpenApiInfo() { Title = "Dukkan API", Version = "v1" });
                 options.DocInclusionPredicate((docName, description) => true);
-
+                options.ParameterFilter<SwaggerEnumParameterFilter>();
+                options.SchemaFilter<SwaggerEnumSchemaFilter>();
+                options.OperationFilter<SwaggerOperationIdFilter>();
+                options.OperationFilter<SwaggerOperationFilter>();
+                options.CustomDefaultSchemaIdSelector();
                 // Define the BearerAuth scheme that's in use
                 options.AddSecurityDefinition("bearerAuth", new OpenApiSecurityScheme()
                 {
@@ -87,7 +93,7 @@ namespace Dukkan.Web.Host.Startup
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey
                 });
-            });
+            }).AddSwaggerGenNewtonsoftSupport();
 
             // Configure Abp and Dependency Injection
             return services.AddAbp<DukkanWebHostModule>(
@@ -98,7 +104,7 @@ namespace Dukkan.Web.Host.Startup
             );
         }
 
-        public void Configure(IApplicationBuilder app,  ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
@@ -112,23 +118,25 @@ namespace Dukkan.Web.Host.Startup
 
             app.UseAbpRequestLocalization();
 
-          
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<AbpCommonHub>("/signalr");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
             });
-          
+
             // Enable middleware to serve generated Swagger as a JSON endpoint
             app.UseSwagger();
             // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
+
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint(_appConfiguration["App:ServerRootAddress"].EnsureEndsWith('/') + "swagger/v1/swagger.json", "Dukkan API V1");
+                options.SwaggerEndpoint(_appConfiguration["App:SwaggerEndPoint"], "Dukkan API V1");
                 options.IndexStream = () => Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream("Dukkan.Web.Host.wwwroot.swagger.ui.index.html");
-            }); // URL: /swagger
+                .GetManifestResourceStream("Dukkan.Web.wwwroot.swagger.ui.index.html");
+                options.InjectBaseUrl(_appConfiguration["App:ServerRootAddress"]);
+            }); //URL: /swagger
         }
     }
 }

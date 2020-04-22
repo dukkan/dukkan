@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Abp.Runtime.Security;
 
-namespace Dukkan.Web.Host.Startup
+namespace Dukkan.Web.Startup
 {
     public static class AuthConfigurer
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Abp.Dependency;
 
-namespace Dukkan.Authentication.External
+namespace Dukkan.Web.Authentication.External
 {
     public abstract class ExternalAuthProviderApiBase : IExternalAuthProviderApi, ITransientDependency
     {

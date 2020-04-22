@@ -3,7 +3,7 @@ using System.Linq;
 using System.Security.Claims;
 using Abp.Extensions;
 
-namespace Dukkan.Identity
+namespace Dukkan.Web.Identity
 {
     public class ExternalLoginInfoHelper
     {

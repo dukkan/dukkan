@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Dukkan.Authentication.External
+namespace Dukkan.Web.Authentication.External
 {
     public interface IExternalAuthConfiguration
     {

@@ -2,7 +2,7 @@ using Abp.AspNetCore.Mvc.Controllers;
 using Abp.IdentityFramework;
 using Microsoft.AspNetCore.Identity;
 
-namespace Dukkan.Controllers
+namespace Dukkan.Web.Controllers
 {
     public abstract class DukkanControllerBase: AbpController
     {

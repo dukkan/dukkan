@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 
-namespace Dukkan.Web.Host.Startup
+namespace Dukkan.Web.Startup
 {
     public class Program
     {

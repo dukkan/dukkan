@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Abp.Dependency;
 
-namespace Dukkan.Authentication.External
+namespace Dukkan.Web.Authentication.External
 {
     public class ExternalAuthConfiguration : IExternalAuthConfiguration, ISingletonDependency
     {

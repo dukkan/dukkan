@@ -14,11 +14,11 @@ import {
   RoleDto,
   PermissionDto,
   CreateRoleDto,
-  PermissionDtoListResultDto
+  ListResultDtoOfPermissionDto,
 } from '@shared/service-proxies/service-proxies';
 
 @Component({
-  templateUrl: 'create-role-dialog.component.html'
+  templateUrl: 'create-role-dialog.component.html',
 })
 export class CreateRoleDialogComponent extends AppComponentBase
   implements OnInit {
@@ -41,7 +41,7 @@ export class CreateRoleDialogComponent extends AppComponentBase
   ngOnInit(): void {
     this._roleService
       .getAllPermissions()
-      .subscribe((result: PermissionDtoListResultDto) => {
+      .subscribe((result: ListResultDtoOfPermissionDto) => {
         this.permissions = result.items;
         this.setInitialPermissionsStatus();
       });

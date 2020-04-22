@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Text;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using Abp.AspNetCore;
 using Abp.AspNetCore.Configuration;
 using Abp.AspNetCore.SignalR;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Zero.Configuration;
-using Dukkan.Authentication.JwtBearer;
-using Dukkan.Configuration;
 using Dukkan.EntityFrameworkCore;
+using Dukkan.Web.Authentication.JwtBearer;
+using Dukkan.Web.Configuration;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 
-namespace Dukkan
+namespace Dukkan.Web
 {
     [DependsOn(
          typeof(DukkanApplicationModule),

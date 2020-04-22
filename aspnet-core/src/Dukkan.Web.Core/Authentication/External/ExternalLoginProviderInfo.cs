@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dukkan.Authentication.External
+namespace Dukkan.Web.Authentication.External
 {
     public class ExternalLoginProviderInfo
     {

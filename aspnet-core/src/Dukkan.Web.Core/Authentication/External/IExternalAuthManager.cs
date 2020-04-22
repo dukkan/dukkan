@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Dukkan.Authentication.External
+namespace Dukkan.Web.Authentication.External
 {
     public interface IExternalAuthManager
     {

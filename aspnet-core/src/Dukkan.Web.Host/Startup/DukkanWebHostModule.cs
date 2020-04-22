@@ -3,8 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Dukkan.Configuration;
+using Dukkan.Web.Configuration;
 
-namespace Dukkan.Web.Host.Startup
+namespace Dukkan.Web.Startup
 {
     [DependsOn(
        typeof(DukkanWebCoreModule))]

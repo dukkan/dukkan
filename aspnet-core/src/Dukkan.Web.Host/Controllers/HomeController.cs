@@ -4,10 +4,8 @@ using Abp;
 using Abp.Extensions;
 using Abp.Notifications;
 using Abp.Timing;
-using Abp.Web.Security.AntiForgery;
-using Dukkan.Controllers;
 
-namespace Dukkan.Web.Host.Controllers
+namespace Dukkan.Web.Controllers
 {
     public class HomeController : DukkanControllerBase
     {

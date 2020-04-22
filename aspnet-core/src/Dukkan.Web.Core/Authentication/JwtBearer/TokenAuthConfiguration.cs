@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Dukkan.Authentication.JwtBearer
+namespace Dukkan.Web.Authentication.JwtBearer
 {
     public class TokenAuthConfiguration
     {

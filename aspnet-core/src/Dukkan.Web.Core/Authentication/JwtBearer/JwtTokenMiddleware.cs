@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 
-namespace Dukkan.Authentication.JwtBearer
+namespace Dukkan.Web.Authentication.JwtBearer
 {
     public static class JwtTokenMiddleware
     {

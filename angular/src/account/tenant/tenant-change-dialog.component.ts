@@ -2,8 +2,7 @@ import { Component, Injector } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AppComponentBase } from '@shared/app-component-base';
-import { AccountServiceProxy } from '@shared/service-proxies/service-proxies';
-import { AppTenantAvailabilityState } from '@shared/AppEnums';
+import { AccountServiceProxy, TenantAvailabilityState } from '@shared/service-proxies/service-proxies';
 import {
   IsTenantAvailableInput,
   IsTenantAvailableOutput
@@ -45,14 +44,14 @@ export class TenantChangeDialogComponent extends AppComponentBase {
       )
       .subscribe((result: IsTenantAvailableOutput) => {
         switch (result.state) {
-          case AppTenantAvailabilityState.Available:
+          case TenantAvailabilityState.Available:
             abp.multiTenancy.setTenantIdCookie(result.tenantId);
             location.reload();
             return;
-          case AppTenantAvailabilityState.InActive:
+          case TenantAvailabilityState.InActive:
             this.message.warn(this.l('TenantIsNotActive', this.tenancyName));
             break;
-          case AppTenantAvailabilityState.NotFound:
+          case TenantAvailabilityState.NotFound:
             this.message.warn(
               this.l('ThereIsNoTenantDefinedWithName{0}', this.tenancyName)
             );

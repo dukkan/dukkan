@@ -4,21 +4,21 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.MultiTenancy;
 using Abp.Runtime.Security;
 using Abp.UI;
-using Dukkan.Authentication.External;
-using Dukkan.Authentication.JwtBearer;
 using Dukkan.Authorization;
 using Dukkan.Authorization.Users;
-using Dukkan.Models.TokenAuth;
 using Dukkan.MultiTenancy;
+using Dukkan.Web.Authentication.External;
+using Dukkan.Web.Authentication.JwtBearer;
+using Dukkan.Web.Models.TokenAuth;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Dukkan.Controllers
+namespace Dukkan.Web.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class TokenAuthController : DukkanControllerBase

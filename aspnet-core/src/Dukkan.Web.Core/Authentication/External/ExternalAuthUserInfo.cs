@@ -1,4 +1,4 @@
-﻿namespace Dukkan.Authentication.External
+﻿namespace Dukkan.Web.Authentication.External
 {
     public class ExternalAuthUserInfo
     {

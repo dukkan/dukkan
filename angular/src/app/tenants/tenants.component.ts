@@ -9,7 +9,7 @@ import {
 import {
   TenantServiceProxy,
   TenantDto,
-  TenantDtoPagedResultDto,
+  PagedResultDtoOfTenantDto,
 } from '@shared/service-proxies/service-proxies';
 import { CreateTenantDialogComponent } from './create-tenant/create-tenant-dialog.component';
 import { EditTenantDialogComponent } from './edit-tenant/edit-tenant-dialog.component';
@@ -57,7 +57,7 @@ export class TenantsComponent extends PagedListingComponentBase<TenantDto> {
           finishedCallback();
         })
       )
-      .subscribe((result: TenantDtoPagedResultDto) => {
+      .subscribe((result: PagedResultDtoOfTenantDto) => {
         this.tenants = result.items;
         this.showPaging(result, pageNumber);
       });

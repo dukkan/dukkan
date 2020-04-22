@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Abp.Authorization.Users;
 
-namespace Dukkan.Models.TokenAuth
+namespace Dukkan.Web.Models.TokenAuth
 {
     public class ExternalAuthenticateModel
     {

@@ -1,10 +1,7 @@
-using System.Threading.Tasks;
 using Abp.Web.Security.AntiForgery;
 using Microsoft.AspNetCore.Antiforgery;
-using Dukkan.Controllers;
-using Microsoft.AspNetCore.Mvc;
 
-namespace Dukkan.Web.Host.Controllers
+namespace Dukkan.Web.Controllers
 {
     public class AntiForgeryController : DukkanControllerBase
     {
