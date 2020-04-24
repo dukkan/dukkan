@@ -6,8 +6,6 @@ namespace Dukkan.Authorization.Roles
 {
     public class Role : AbpRole<User>
     {
-        public const int MaxDescriptionLength = 5000;
-
         public Role()
         {
         }
@@ -22,7 +20,7 @@ namespace Dukkan.Authorization.Roles
         {
         }
 
-        [StringLength(MaxDescriptionLength)]
-        public string Description {get; set;}
+        [StringLength(RoleConsts.MaxDescriptionLength)]
+        public string Description { get; set; }
     }
 }

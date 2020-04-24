@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
-using Abp.Application.Services.Dto;
 using Dukkan.Users;
 using Dukkan.Users.Dto;
 

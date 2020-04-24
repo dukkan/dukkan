@@ -17,11 +17,11 @@ using Microsoft.IdentityModel.Tokens;
 namespace Dukkan.Web
 {
     [DependsOn(
-         typeof(DukkanApplicationModule),
-         typeof(DukkanEntityFrameworkModule),
-         typeof(AbpAspNetCoreModule)
-        ,typeof(AbpAspNetCoreSignalRModule)
-     )]
+        typeof(DukkanApplicationModule),
+        typeof(DukkanEntityFrameworkModule),
+        typeof(AbpAspNetCoreModule),
+        typeof(AbpAspNetCoreSignalRModule)
+    )]
     public class DukkanWebCoreModule : AbpModule
     {
         private readonly IWebHostEnvironment _env;
@@ -43,9 +43,9 @@ namespace Dukkan.Web
             Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();
 
             Configuration.Modules.AbpAspNetCore()
-                 .CreateControllersForAppServices(
-                     typeof(DukkanApplicationModule).GetAssembly()
-                 );
+                .CreateControllersForAppServices(
+                    typeof(DukkanApplicationModule).GetAssembly()
+                );
 
             ConfigureTokenAuth();
         }

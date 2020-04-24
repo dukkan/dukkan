@@ -11,7 +11,6 @@ using Abp.AspNetCore;
 using Abp.AspNetCore.Mvc.Antiforgery;
 using Abp.Castle.Logging.Log4Net;
 using Abp.Extensions;
-using Dukkan.Configuration;
 using Dukkan.Identity;
 using Abp.AspNetCore.SignalR.Hubs;
 using Abp.Dependency;
@@ -49,7 +48,6 @@ namespace Dukkan.Web.Startup
                     NamingStrategy = new CamelCaseNamingStrategy()
                 };
             });
-
 
 
             IdentityRegistrar.Register(services);

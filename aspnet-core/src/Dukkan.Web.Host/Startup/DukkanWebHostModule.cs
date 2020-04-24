@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
-using Dukkan.Configuration;
 using Dukkan.Web.Configuration;
 
 namespace Dukkan.Web.Startup

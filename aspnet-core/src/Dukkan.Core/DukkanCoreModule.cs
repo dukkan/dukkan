@@ -1,4 +1,6 @@
-﻿using Abp.Modules;
+﻿using System;
+using Abp.AutoMapper;
+using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Timing;
 using Abp.Zero;
@@ -12,11 +14,19 @@ using Dukkan.Timing;
 
 namespace Dukkan
 {
-    [DependsOn(typeof(AbpZeroCoreModule))]
+    [DependsOn(
+        typeof(AbpZeroCoreModule),
+        typeof(AbpAutoMapperModule),
+        typeof(DukkanCoreSharedModule)
+    )]
     public class DukkanCoreModule : AbpModule
     {
         public override void PreInitialize()
         {
+            //workaround for issue: https://github.com/aspnet/EntityFrameworkCore/issues/9825
+            //related github issue: https://github.com/aspnet/EntityFrameworkCore/issues/10407
+            AppContext.SetSwitch("Microsoft.EntityFrameworkCore.Issue9825", true);
+
             Configuration.Auditing.IsEnabledForAnonymousUsers = true;
 
             // Declare entity types

@@ -1,24 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\..\common.props"></Import>
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <AssemblyName>Dukkan.Migrator</AssemblyName>
-    <OutputType>Exe</OutputType>
     <PackageId>Dukkan.Migrator</PackageId>
+    <UserSecretsId>Dukkan-894FDFC1-6482-4A56-926A-3C46C9FE0329</UserSecretsId>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
     <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
     <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
+
   <ItemGroup>
     <None Update="appsettings.json;log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
   <ItemGroup>
-    <PackageReference Include="Abp.Castle.Log4Net" Version="5.4.0" />
+    <PackageReference Include="Abp.Castle.Log4Net" Version="5.6.0"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.3"/>
   </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Dukkan.Core\Dukkan.Core.csproj" />
-    <ProjectReference Include="..\Dukkan.EntityFrameworkCore\Dukkan.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\Dukkan.EntityFrameworkCore\Dukkan.EntityFrameworkCore.csproj"/>
   </ItemGroup>
 </Project>

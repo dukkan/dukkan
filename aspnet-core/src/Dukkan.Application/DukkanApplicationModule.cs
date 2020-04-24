@@ -6,8 +6,9 @@ using Dukkan.Authorization;
 namespace Dukkan
 {
     [DependsOn(
-        typeof(DukkanCoreModule), 
-        typeof(AbpAutoMapperModule))]
+        typeof(DukkanApplicationSharedModule),
+        typeof(DukkanCoreModule)
+    )]
     public class DukkanApplicationModule : AbpModule
     {
         public override void PreInitialize()
