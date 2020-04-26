@@ -15,7 +15,7 @@ namespace Dukkan.Roles.Dto
         [StringLength(AbpRoleBase.MaxDisplayNameLength)]
         public string DisplayName { get; set; }
 
-        [StringLength(RoleConsts.MaxDescriptionLength)]
+        [StringLength(RoleConsts.DescriptionMaxLength)]
         public string Description { get; set; }
 
         public bool IsStatic { get; set; }

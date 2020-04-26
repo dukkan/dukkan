@@ -20,7 +20,7 @@ namespace Dukkan.Authorization.Roles
         {
         }
 
-        [StringLength(RoleConsts.MaxDescriptionLength)]
+        [StringLength(RoleConsts.DescriptionMaxLength)]
         public string Description { get; set; }
     }
 }

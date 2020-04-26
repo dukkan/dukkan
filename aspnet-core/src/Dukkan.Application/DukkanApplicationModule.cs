@@ -1,4 +1,5 @@
 ﻿using Abp.AutoMapper;
+using Abp.Configuration;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Dukkan.Authorization;
@@ -14,18 +15,18 @@ namespace Dukkan
         public override void PreInitialize()
         {
             Configuration.Authorization.Providers.Add<DukkanAuthorizationProvider>();
+
+            Configuration.Modules.AbpAutoMapper().Configurators.Add(configuration =>
+            {
+                CustomDtoMapper.CreateMappings(configuration, new MultiLingualMapContext(
+                    IocManager.Resolve<ISettingManager>()
+                ));
+            });
         }
 
         public override void Initialize()
         {
-            var thisAssembly = typeof(DukkanApplicationModule).GetAssembly();
-
-            IocManager.RegisterAssemblyByConvention(thisAssembly);
-
-            Configuration.Modules.AbpAutoMapper().Configurators.Add(
-                // Scan the assembly for classes which inherit from AutoMapper.Profile
-                cfg => cfg.AddMaps(thisAssembly)
-            );
+            IocManager.RegisterAssemblyByConvention(typeof(DukkanApplicationModule).GetAssembly());
         }
     }
 }

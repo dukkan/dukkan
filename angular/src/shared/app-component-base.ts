@@ -8,49 +8,54 @@ import { SettingService } from '@abp/settings/setting.service';
 import { MessageService } from '@abp/message/message.service';
 import { AbpMultiTenancyService } from '@abp/multi-tenancy/abp-multi-tenancy.service';
 import { AppSessionService } from '@shared/session/app-session.service';
+import { PrimengTableHelper } from './helpers/PrimengTableHelper';
 
 export abstract class AppComponentBase {
+  localizationSourceName = AppConsts.localization.defaultLocalizationSourceName;
 
-    localizationSourceName = AppConsts.localization.defaultLocalizationSourceName;
+  localization: LocalizationService;
+  permission: PermissionCheckerService;
+  feature: FeatureCheckerService;
+  notify: NotifyService;
+  setting: SettingService;
+  message: MessageService;
+  multiTenancy: AbpMultiTenancyService;
+  appSession: AppSessionService;
+  elementRef: ElementRef;
+  primengTableHelper: PrimengTableHelper;
 
-    localization: LocalizationService;
-    permission: PermissionCheckerService;
-    feature: FeatureCheckerService;
-    notify: NotifyService;
-    setting: SettingService;
-    message: MessageService;
-    multiTenancy: AbpMultiTenancyService;
-    appSession: AppSessionService;
-    elementRef: ElementRef;
+  constructor(injector: Injector) {
+    this.localization = injector.get(LocalizationService);
+    this.permission = injector.get(PermissionCheckerService);
+    this.feature = injector.get(FeatureCheckerService);
+    this.notify = injector.get(NotifyService);
+    this.setting = injector.get(SettingService);
+    this.message = injector.get(MessageService);
+    this.multiTenancy = injector.get(AbpMultiTenancyService);
+    this.appSession = injector.get(AppSessionService);
+    this.elementRef = injector.get(ElementRef);
+    this.primengTableHelper = new PrimengTableHelper();
+  }
 
-    constructor(injector: Injector) {
-        this.localization = injector.get(LocalizationService);
-        this.permission = injector.get(PermissionCheckerService);
-        this.feature = injector.get(FeatureCheckerService);
-        this.notify = injector.get(NotifyService);
-        this.setting = injector.get(SettingService);
-        this.message = injector.get(MessageService);
-        this.multiTenancy = injector.get(AbpMultiTenancyService);
-        this.appSession = injector.get(AppSessionService);
-        this.elementRef = injector.get(ElementRef);
+  l(key: string, ...args: any[]): string {
+    let localizedText = this.localization.localize(
+      key,
+      this.localizationSourceName
+    );
+
+    if (!localizedText) {
+      localizedText = key;
     }
 
-    l(key: string, ...args: any[]): string {
-        let localizedText = this.localization.localize(key, this.localizationSourceName);
-
-        if (!localizedText) {
-            localizedText = key;
-        }
-
-        if (!args || !args.length) {
-            return localizedText;
-        }
-
-        args.unshift(localizedText);
-        return abp.utils.formatString.apply(this, args);
+    if (!args || !args.length) {
+      return localizedText;
     }
 
-    isGranted(permissionName: string): boolean {
-        return this.permission.isGranted(permissionName);
-    }
+    args.unshift(localizedText);
+    return abp.utils.formatString.apply(this, args);
+  }
+
+  isGranted(permissionName: string): boolean {
+    return this.permission.isGranted(permissionName);
+  }
 }

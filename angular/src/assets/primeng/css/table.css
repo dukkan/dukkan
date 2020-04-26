@@ -1,0 +1,66 @@
+.p-table-wrapper {
+  white-space: nowrap;
+}
+
+.p-table-wrapper .ui-table .ui-table-thead > tr > th,
+.p-table-wrapper .ui-table .ui-table-tbody > tr > td,
+.p-table-wrapper .ui-table .ui-table-tfoot > tr > td {
+  padding: 0.75rem;
+  border: none;
+  border-top: 2px solid #dee2e6;
+}
+
+.p-table-wrapper .ui-table .ui-table-thead > tr > th:first-of-type,
+.p-table-wrapper .ui-table .ui-table-tbody > tr > td:first-of-type,
+.p-table-wrapper .ui-table .ui-table-tfoot > tr > td:first-of-type {
+  padding-left: 1.5rem;
+}
+
+.p-table-wrapper .ui-table .ui-table-thead > tr > th {
+  background-color: #f8f9fa;
+  color: #1f2d3d;
+  border-top: none;
+}
+
+.p-table-wrapper .ui-table .ui-table-tbody > tr {
+  background-color: white;
+  color: #1f2d3d;
+  position: relative;
+}
+
+.p-table-wrapper .ui-table .ui-table-tbody > tr:nth-child(even) {
+  background-color: white;
+  color: #1f2d3d;
+  position: relative;
+}
+
+.p-table-wrapper .ui-table .ui-table-tbody > tr.ui-state-highlight {
+  background-color: #c2dbff;
+  color: #1f2d3d;
+}
+
+.p-table-wrapper
+  .ui-table
+  .ui-table-tbody
+  > tr:nth-child(even).ui-state-highlight {
+  background-color: #c2dbff;
+  color: #1f2d3d;
+}
+
+.p-table-wrapper
+  .ui-table.ui-table-hoverable-rows
+  .ui-table-tbody
+  > tr.ui-selectable-row:not(.ui-state-highlight):not(.ui-contextmenu-selected):hover {
+  cursor: pointer;
+  background-color: #ececec;
+  color: #1f2d3d;
+}
+
+.p-table-wrapper .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
+  background-color: #ececec;
+  color: #1f2d3d;
+}
+
+.p-table-wrapper .ui-table-responsive .ui-table-tbody > tr {
+  border-top: 2px solid #dee2e6;
+}

@@ -2,6 +2,6 @@
 {
     public class RoleConsts
     {
-        public const int MaxDescriptionLength = 5000;
+        public const int DescriptionMaxLength = 5000;
     }
 }

@@ -10,22 +10,49 @@ import { RolesComponent } from 'app/roles/roles.component';
 import { ChangePasswordComponent } from './users/change-password/change-password.component';
 
 @NgModule({
-    imports: [
-        RouterModule.forChild([
-            {
-                path: '',
-                component: AppComponent,
-                children: [
-                    { path: 'home', component: HomeComponent,  canActivate: [AppRouteGuard] },
-                    { path: 'users', component: UsersComponent, data: { permission: 'Pages.Users' }, canActivate: [AppRouteGuard] },
-                    { path: 'roles', component: RolesComponent, data: { permission: 'Pages.Roles' }, canActivate: [AppRouteGuard] },
-                    { path: 'tenants', component: TenantsComponent, data: { permission: 'Pages.Tenants' }, canActivate: [AppRouteGuard] },
-                    { path: 'about', component: AboutComponent },
-                    { path: 'update-password', component: ChangePasswordComponent }
-                ]
-            }
-        ])
-    ],
-    exports: [RouterModule]
+  imports: [
+    RouterModule.forChild([
+      {
+        path: '',
+        component: AppComponent,
+        children: [
+          {
+            path: 'home',
+            component: HomeComponent,
+            canActivate: [AppRouteGuard],
+          },
+          {
+            path: 'users',
+            component: UsersComponent,
+            data: { permission: 'Pages.Users' },
+            canActivate: [AppRouteGuard],
+          },
+          {
+            path: 'roles',
+            component: RolesComponent,
+            data: { permission: 'Pages.Roles' },
+            canActivate: [AppRouteGuard],
+          },
+          {
+            path: 'tenants',
+            component: TenantsComponent,
+            data: { permission: 'Pages.Tenants' },
+            canActivate: [AppRouteGuard],
+          },
+          { path: 'about', component: AboutComponent },
+          { path: 'update-password', component: ChangePasswordComponent },
+          {
+            path: 'categories',
+            loadChildren: () =>
+              import('app/catalog/categories/category.module').then(
+                (m) => m.CategoryModule
+              ),
+            data: { preload: true },
+          },
+        ],
+      },
+    ]),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

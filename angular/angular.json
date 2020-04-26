@@ -35,6 +35,11 @@
               "node_modules/sweetalert2/dist/sweetalert2.css",
               "src/assets/freeze-ui/freeze-ui.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "src/assets/primeng/css/table.css",
+              "src/assets/primeng/css/paginator.css",
               "node_modules/admin-lte-css-only/css/adminlte.min.css",
               "src/shared/core.less"
             ],
@@ -123,6 +128,11 @@
               "node_modules/sweetalert2/dist/sweetalert2.css",
               "src/assets/freeze-ui/freeze-ui.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/nova-light/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "src/assets/primeng/css/table.css",
+              "src/assets/primeng/css/paginator.css",
               "node_modules/admin-lte-css-only/css/adminlte.min.css",
               "src/shared/core.less"
             ],
@@ -142,9 +152,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.json"
-            ],
+            "tsConfig": ["src/tsconfig.json"],
             "exclude": []
           }
         }
@@ -165,9 +173,7 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "e2e/tsconfig.json"
-            ],
+            "tsConfig": ["e2e/tsconfig.json"],
             "exclude": []
           }
         }

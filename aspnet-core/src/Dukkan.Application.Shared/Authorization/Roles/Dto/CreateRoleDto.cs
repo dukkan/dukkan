@@ -17,7 +17,7 @@ namespace Dukkan.Roles.Dto
 
         public string NormalizedName { get; set; }
         
-        [StringLength(RoleConsts.MaxDescriptionLength)]
+        [StringLength(RoleConsts.DescriptionMaxLength)]
         public string Description { get; set; }
 
         public List<string> GrantedPermissions { get; set; }

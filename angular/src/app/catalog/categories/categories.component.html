@@ -1,0 +1,148 @@
+<div [@routerTransition]>
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <h1>{{ "Categories" | localize }}</h1>
+        </div>
+        <div class="col-6 text-right">
+          <a href="javascript:;" class="btn bg-blue" (click)="showAddModal()">
+            <i class="fa fa-plus-square"></i>
+            {{ "Create" | localize }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="content px-2">
+    <div class="container-fluid">
+      <div class="card" [busy]="primengTableHelper.isLoading">
+        <div class="card-header">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <button type="button" class="btn bg-blue" (click)="getRecords()">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            <input
+              type="text"
+              class="form-control"
+              name="keyword"
+              [placeholder]="'SearchWithThreeDot' | localize"
+              [(ngModel)]="keyword"
+              (keyup.enter)="getRecords()"
+            />
+          </div>
+        </div>
+        <div class="card-body table-responsive p-0 p-table-wrapper">
+          <p-table
+            #dataTable
+            [lazy]="true"
+            [paginator]="false"
+            [rowHover]="true"
+            [responsive]="primengTableHelper.isResponsive"
+            [rows]="primengTableHelper.defaultRecordsCountPerPage"
+            [value]="primengTableHelper.records"
+            (onLazyLoad)="getRecords($event)"
+          >
+            <ng-template pTemplate="header">
+              <tr>
+                <th style="width: 130px;">
+                  {{ "Actions" | localize }}
+                </th>
+                <th style="width: 150px;" pSortableColumn="name">
+                  {{ "Name" | localize }}
+                  <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th style="width: 150px;" pSortableColumn="description">
+                  {{ "Description" | localize }}
+                  <p-sortIcon field="description"></p-sortIcon>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-record="$implicit">
+              <tr [pSelectableRow]="record">
+                <td style="width: 130px;">
+                  <div class="btn-group" dropdown container="body">
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      (click)="showEditModal(record)"
+                    >
+                      <i class="fas fa-pencil-alt"></i>
+                      {{ "Edit" | localize }}
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-default"
+                      dropdownToggle
+                    >
+                      <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                    <ul *dropdownMenu class="dropdown-menu">
+                      <li role="menuitem">
+                        <a
+                          class="dropdown-item"
+                          href="javascript:;"
+                          (click)="deleteRecord(record)"
+                        >
+                          <i class="fas fa-trash"></i>
+                          {{ "Delete" | localize }}
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </td>
+                <td style="width: 150px;">
+                  <span class="ui-column-title"> {{ "Name" | localize }}</span>
+                  {{ record.name }}
+                </td>
+                <td style="width: 150px;">
+                  <span class="ui-column-title">
+                    {{ "Description" | localize }}
+                  </span>
+                  {{ record.description }}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+          <div
+            *ngIf="primengTableHelper.totalRecordsCount == 0"
+            class="text-center py-3"
+          >
+            {{ "NoData" | localize }}
+          </div>
+        </div>
+        <div class="card-footer bg-light border-top p-paginator-wrapper">
+          <div class="row">
+            <div class="col-sm-4 col-12 text-sm-left text-center">
+              <button class="btn btn-secondary" (click)="getRecords()">
+                <i class="fas fa-redo-alt"></i>
+              </button>
+            </div>
+            <div class="col-sm-4 col-12 text-center">
+              <p class="mb-0 my-2">
+                {{ "TotalRecordsCount" | localize }}:
+                {{ primengTableHelper.totalRecordsCount }}
+              </p>
+            </div>
+            <div class="col-sm-4 col-12">
+              <div class="float-sm-right m-auto">
+                <p-paginator
+                  #paginator
+                  [rows]="primengTableHelper.defaultRecordsCountPerPage"
+                  [totalRecords]="primengTableHelper.totalRecordsCount"
+                  [rowsPerPageOptions]="
+                    primengTableHelper.predefinedRecordsCountPerPage
+                  "
+                  (onPageChange)="getRecords($event)"
+                >
+                </p-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

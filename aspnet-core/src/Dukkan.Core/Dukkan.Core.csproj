@@ -2,7 +2,7 @@
   <Import Project="..\..\common.props"></Import>
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssetTargetFallback>$(AssetTargetFallback);portable-net45+win8+wp8+wpa81;</AssetTargetFallback>
     <AssemblyName>Dukkan.Core</AssemblyName>
     <PackageId>Dukkan.Core</PackageId>
@@ -16,16 +16,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Localization\SourceFiles\*.xml" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)"/>
+    <EmbeddedResource Include="Localization\SourceFiles\*.xml" Exclude="bin\**;obj\**;**\*.xproj;packages\**;@(EmbeddedResource)" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abp.AutoMapper" Version="5.6.0"/>
-    <PackageReference Include="Abp.ZeroCore.IdentityServer4.EntityFrameworkCore" Version="5.6.0"/>
-    <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="3.3.1"/>
+    <PackageReference Include="Abp.AutoMapper" Version="5.6.0" />
+    <PackageReference Include="Abp.ZeroCore.IdentityServer4.EntityFrameworkCore" Version="5.6.0" />
+    <PackageReference Include="Castle.Windsor.MsDependencyInjection" Version="3.3.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dukkan.Core.Shared\Dukkan.Core.Shared.csproj"/>
+    <ProjectReference Include="..\Dukkan.Core.Shared\Dukkan.Core.Shared.csproj" />
   </ItemGroup>
 </Project>

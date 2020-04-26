@@ -4,14 +4,16 @@ using Dukkan.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Dukkan.Migrations
 {
     [DbContext(typeof(DukkanDbContext))]
-    partial class DukkanDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200424135545_CategoryAdded")]
+    partial class CategoryAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
