@@ -19,6 +19,7 @@ using Dukkan.Web.Configuration;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Dukkan.Web.Swagger;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Dukkan.Web.Startup
 {
@@ -49,6 +50,9 @@ namespace Dukkan.Web.Startup
                 };
             });
 
+            services.AddRazorPages();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest);
 
             IdentityRegistrar.Register(services);
             AuthConfigurer.Configure(services, _appConfiguration);
@@ -104,6 +108,8 @@ namespace Dukkan.Web.Startup
 
         public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
+            app.UseDeveloperExceptionPage();
+
             app.UseAbp(options => { options.UseAbpRequestLocalization = false; }); // Initializes ABP framework.
 
             app.UseCors(_defaultCorsPolicyName); // Enable CORS!
@@ -116,12 +122,12 @@ namespace Dukkan.Web.Startup
 
             app.UseAbpRequestLocalization();
 
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<AbpCommonHub>("/signalr");
                 endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
 
             // Enable middleware to serve generated Swagger as a JSON endpoint

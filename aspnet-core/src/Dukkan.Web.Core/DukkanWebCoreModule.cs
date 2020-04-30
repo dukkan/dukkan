@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Text;
 using Abp.AspNetCore;
-using Abp.AspNetCore.Configuration;
 using Abp.AspNetCore.SignalR;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
-using Abp.Zero.Configuration;
-using Dukkan.EntityFrameworkCore;
+using Dukkan.Catalog;
 using Dukkan.Web.Authentication.JwtBearer;
 using Dukkan.Web.Configuration;
 using Microsoft.AspNetCore.Hosting;
@@ -17,10 +15,10 @@ using Microsoft.IdentityModel.Tokens;
 namespace Dukkan.Web
 {
     [DependsOn(
-        typeof(DukkanApplicationModule),
-        typeof(DukkanEntityFrameworkModule),
-        typeof(AbpAspNetCoreModule),
-        typeof(AbpAspNetCoreSignalRModule)
+        typeof(AbpAspNetCoreSignalRModule),
+        typeof(DukkanZeroModule),
+        typeof(DukkanMiscModule),
+        typeof(DukkanCatalogModule)
     )]
     public class DukkanWebCoreModule : AbpModule
     {
@@ -33,23 +31,6 @@ namespace Dukkan.Web
             _appConfiguration = env.GetAppConfiguration();
         }
 
-        public override void PreInitialize()
-        {
-            Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(
-                DukkanConsts.ConnectionStringName
-            );
-
-            // Use database for language management
-            Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();
-
-            Configuration.Modules.AbpAspNetCore()
-                .CreateControllersForAppServices(
-                    typeof(DukkanApplicationModule).GetAssembly()
-                );
-
-            ConfigureTokenAuth();
-        }
-
         private void ConfigureTokenAuth()
         {
             IocManager.Register<TokenAuthConfiguration>();
@@ -60,6 +41,15 @@ namespace Dukkan.Web
             tokenAuthConfig.Audience = _appConfiguration["Authentication:JwtBearer:Audience"];
             tokenAuthConfig.SigningCredentials = new SigningCredentials(tokenAuthConfig.SecurityKey, SecurityAlgorithms.HmacSha256);
             tokenAuthConfig.Expiration = TimeSpan.FromDays(1);
+        }
+
+        public override void PreInitialize()
+        {
+            Configuration.DefaultNameOrConnectionString = _appConfiguration.GetConnectionString(
+                DukkanConsts.ConnectionStringName
+            );
+
+            ConfigureTokenAuth();
         }
 
         public override void Initialize()

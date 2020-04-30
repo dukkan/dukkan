@@ -9,11 +9,11 @@ using Abp.Events.Bus.Entities;
 using Abp.MultiTenancy;
 using Abp.Runtime.Session;
 using Abp.TestBase;
-using Dukkan.Authorization.Users;
-using Dukkan.EntityFrameworkCore;
-using Dukkan.EntityFrameworkCore.Seed.Host;
-using Dukkan.EntityFrameworkCore.Seed.Tenants;
-using Dukkan.MultiTenancy;
+using Dukkan.Authorization.Users.Domain;
+using Dukkan.Data;
+using Dukkan.Data.Seed.Host;
+using Dukkan.Data.Seed.Tenants;
+using Dukkan.MultiTenancy.Domain;
 
 namespace Dukkan.Tests
 {
@@ -21,7 +21,7 @@ namespace Dukkan.Tests
     {
         protected DukkanTestBase()
         {
-            void NormalizeDbContext(DukkanDbContext context)
+            void NormalizeDbContext(DukkanZeroDbContext context)
             {
                 context.EntityChangeEventHelper = NullEntityChangeEventHelper.Instance;
                 context.EventBus = NullEventBus.Instance;
@@ -57,31 +57,31 @@ namespace Dukkan.Tests
             return new DisposeAction(() => AbpSession.TenantId = previousTenantId);
         }
 
-        protected void UsingDbContext(Action<DukkanDbContext> action)
+        protected void UsingDbContext(Action<DukkanZeroDbContext> action)
         {
             UsingDbContext(AbpSession.TenantId, action);
         }
 
-        protected Task UsingDbContextAsync(Func<DukkanDbContext, Task> action)
+        protected Task UsingDbContextAsync(Func<DukkanZeroDbContext, Task> action)
         {
             return UsingDbContextAsync(AbpSession.TenantId, action);
         }
 
-        protected T UsingDbContext<T>(Func<DukkanDbContext, T> func)
+        protected T UsingDbContext<T>(Func<DukkanZeroDbContext, T> func)
         {
             return UsingDbContext(AbpSession.TenantId, func);
         }
 
-        protected Task<T> UsingDbContextAsync<T>(Func<DukkanDbContext, Task<T>> func)
+        protected Task<T> UsingDbContextAsync<T>(Func<DukkanZeroDbContext, Task<T>> func)
         {
             return UsingDbContextAsync(AbpSession.TenantId, func);
         }
 
-        protected void UsingDbContext(int? tenantId, Action<DukkanDbContext> action)
+        protected void UsingDbContext(int? tenantId, Action<DukkanZeroDbContext> action)
         {
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<DukkanDbContext>())
+                using (var context = LocalIocManager.Resolve<DukkanZeroDbContext>())
                 {
                     action(context);
                     context.SaveChanges();
@@ -89,11 +89,11 @@ namespace Dukkan.Tests
             }
         }
 
-        protected async Task UsingDbContextAsync(int? tenantId, Func<DukkanDbContext, Task> action)
+        protected async Task UsingDbContextAsync(int? tenantId, Func<DukkanZeroDbContext, Task> action)
         {
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<DukkanDbContext>())
+                using (var context = LocalIocManager.Resolve<DukkanZeroDbContext>())
                 {
                     await action(context);
                     await context.SaveChangesAsync();
@@ -101,13 +101,13 @@ namespace Dukkan.Tests
             }
         }
 
-        protected T UsingDbContext<T>(int? tenantId, Func<DukkanDbContext, T> func)
+        protected T UsingDbContext<T>(int? tenantId, Func<DukkanZeroDbContext, T> func)
         {
             T result;
 
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<DukkanDbContext>())
+                using (var context = LocalIocManager.Resolve<DukkanZeroDbContext>())
                 {
                     result = func(context);
                     context.SaveChanges();
@@ -117,13 +117,13 @@ namespace Dukkan.Tests
             return result;
         }
 
-        protected async Task<T> UsingDbContextAsync<T>(int? tenantId, Func<DukkanDbContext, Task<T>> func)
+        protected async Task<T> UsingDbContextAsync<T>(int? tenantId, Func<DukkanZeroDbContext, Task<T>> func)
         {
             T result;
 
             using (UsingTenantId(tenantId))
             {
-                using (var context = LocalIocManager.Resolve<DukkanDbContext>())
+                using (var context = LocalIocManager.Resolve<DukkanZeroDbContext>())
                 {
                     result = await func(context);
                     await context.SaveChangesAsync();

@@ -7,8 +7,9 @@ using Dukkan.Web.Configuration;
 namespace Dukkan.Web.Startup
 {
     [DependsOn(
-       typeof(DukkanWebCoreModule))]
-    public class DukkanWebHostModule: AbpModule
+       typeof(DukkanWebCoreModule)
+    )]
+    public class DukkanWebHostModule : AbpModule
     {
         private readonly IWebHostEnvironment _env;
         private readonly IConfigurationRoot _appConfiguration;

@@ -1,48 +1,28 @@
-﻿using System;
+﻿using Abp.AspNetCore;
 using Abp.AutoMapper;
+using Abp.EntityFrameworkCore;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Timing;
-using Abp.Zero;
-using Abp.Zero.Configuration;
-using Dukkan.Authorization.Roles;
-using Dukkan.Authorization.Users;
 using Dukkan.Configuration;
 using Dukkan.Localization;
-using Dukkan.MultiTenancy;
 using Dukkan.Timing;
 
 namespace Dukkan
 {
     [DependsOn(
-        typeof(AbpZeroCoreModule),
         typeof(AbpAutoMapperModule),
-        typeof(DukkanCoreSharedModule)
+        typeof(AbpAspNetCoreModule),
+        typeof(AbpEntityFrameworkCoreModule)
     )]
     public class DukkanCoreModule : AbpModule
     {
         public override void PreInitialize()
         {
-            //workaround for issue: https://github.com/aspnet/EntityFrameworkCore/issues/9825
-            //related github issue: https://github.com/aspnet/EntityFrameworkCore/issues/10407
-            AppContext.SetSwitch("Microsoft.EntityFrameworkCore.Issue9825", true);
-
             Configuration.Auditing.IsEnabledForAnonymousUsers = true;
-
-            // Declare entity types
-            Configuration.Modules.Zero().EntityTypes.Tenant = typeof(Tenant);
-            Configuration.Modules.Zero().EntityTypes.Role = typeof(Role);
-            Configuration.Modules.Zero().EntityTypes.User = typeof(User);
-
-            DukkanLocalizationConfigurer.Configure(Configuration.Localization);
-
-            // Enable this line to create a multi-tenant application.
             Configuration.MultiTenancy.IsEnabled = DukkanConsts.MultiTenancyEnabled;
-
-            // Configure roles
-            AppRoleConfig.Configure(Configuration.Modules.Zero().RoleManagement);
-
             Configuration.Settings.Providers.Add<AppSettingProvider>();
+            DukkanLocalizationConfigurer.Configure(Configuration.Localization);
         }
 
         public override void Initialize()

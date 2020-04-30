@@ -9,19 +9,21 @@ using Abp.Net.Mail;
 using Abp.TestBase;
 using Abp.Zero.Configuration;
 using Abp.Zero.EntityFrameworkCore;
-using Dukkan.EntityFrameworkCore;
+using Dukkan.Catalog;
+using Dukkan.Data;
 using Dukkan.Tests.DependencyInjection;
 
 namespace Dukkan.Tests
 {
     [DependsOn(
-        typeof(DukkanApplicationModule),
-        typeof(DukkanEntityFrameworkModule),
-        typeof(AbpTestBaseModule)
-        )]
+        typeof(AbpTestBaseModule),
+        typeof(DukkanZeroModule),
+        typeof(DukkanMiscModule),
+        typeof(DukkanCatalogModule)
+    )]
     public class DukkanTestModule : AbpModule
     {
-        public DukkanTestModule(DukkanEntityFrameworkModule abpProjectNameEntityFrameworkModule)
+        public DukkanTestModule(DukkanZeroModule abpProjectNameEntityFrameworkModule)
         {
             abpProjectNameEntityFrameworkModule.SkipDbContextRegistration = true;
             abpProjectNameEntityFrameworkModule.SkipDbSeed = true;
@@ -40,7 +42,7 @@ namespace Dukkan.Tests
             // Use database for language management
             Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();
 
-            RegisterFakeService<AbpZeroDbMigrator<DukkanDbContext>>();
+            RegisterFakeService<AbpZeroDbMigrator<DukkanZeroDbContext>>();
 
             Configuration.ReplaceService<IEmailSender, NullEmailSender>(DependencyLifeStyle.Transient);
         }

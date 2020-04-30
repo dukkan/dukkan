@@ -11,7 +11,9 @@ using Abp.Runtime.Security;
 using Abp.UI;
 using Dukkan.Authorization;
 using Dukkan.Authorization.Users;
+using Dukkan.Authorization.Users.Domain;
 using Dukkan.MultiTenancy;
+using Dukkan.MultiTenancy.Domain;
 using Dukkan.Web.Authentication.External;
 using Dukkan.Web.Authentication.JwtBearer;
 using Dukkan.Web.Models.TokenAuth;
@@ -140,7 +142,7 @@ namespace Dukkan.Web.Controllers
                 externalUser.Surname,
                 externalUser.EmailAddress,
                 externalUser.EmailAddress,
-                Authorization.Users.User.CreateRandomPassword(),
+                Authorization.Users.Domain.User.CreateRandomPassword(),
                 true
             );
 

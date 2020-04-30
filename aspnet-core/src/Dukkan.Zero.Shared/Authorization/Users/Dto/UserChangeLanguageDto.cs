@@ -1,0 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace Dukkan.Authorization.Users.Dto
+{
+    public class UserChangeLanguageDto
+    {
+        [Required]
+        public string LanguageName { get; set; }
+    }
+}
