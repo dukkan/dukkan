@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Shouldly;
 using Xunit;
-using Dukkan.Sessions.Services;
+using Dukkan.Sessions;
 
 namespace Dukkan.Tests.Sessions
 {

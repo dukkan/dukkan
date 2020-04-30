@@ -30,9 +30,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Dukkan.Catalog\Dukkan.Catalog.csproj" />
-        <ProjectReference Include="..\..\src\Dukkan.Misc\Dukkan.Misc.csproj" />
-        <ProjectReference Include="..\..\src\Dukkan.Zero\Dukkan.Zero.csproj" />
+        <ProjectReference Include="..\..\src\Dukkan.Application\Dukkan.Application.csproj" />
+        <ProjectReference Include="..\..\src\Dukkan.EntityFrameworkCore\Dukkan.EntityFrameworkCore.csproj" />
     </ItemGroup>
 
     <ItemGroup>

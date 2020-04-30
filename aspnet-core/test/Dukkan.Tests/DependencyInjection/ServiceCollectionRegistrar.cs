@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor.MsDependencyInjection;
 using Abp.Dependency;
-using Dukkan.Data;
+using Dukkan.EntityFrameworkCore;
 using Dukkan.Identity;
 
 namespace Dukkan.Tests.DependencyInjection
@@ -21,12 +21,12 @@ namespace Dukkan.Tests.DependencyInjection
 
             var serviceProvider = WindsorRegistrationHelper.CreateServiceProvider(iocManager.IocContainer, services);
 
-            var builder = new DbContextOptionsBuilder<DukkanZeroDbContext>();
+            var builder = new DbContextOptionsBuilder<DukkanDbContext>();
             builder.UseInMemoryDatabase(Guid.NewGuid().ToString()).UseInternalServiceProvider(serviceProvider);
 
             iocManager.IocContainer.Register(
                 Component
-                    .For<DbContextOptions<DukkanZeroDbContext>>()
+                    .For<DbContextOptions<DukkanDbContext>>()
                     .Instance(builder.Options)
                     .LifestyleSingleton()
             );

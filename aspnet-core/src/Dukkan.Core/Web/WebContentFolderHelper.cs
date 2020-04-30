@@ -22,8 +22,12 @@ namespace Dukkan.Web
             var directoryInfo = new DirectoryInfo(coreAssemblyDirectoryPath);
             while (!DirectoryContains(directoryInfo.FullName, "Dukkan.sln"))
             {
-                directoryInfo = directoryInfo.Parent
-                                ?? throw new Exception("Could not find content root folder!");
+                if (directoryInfo.Parent == null)
+                {
+                    throw new Exception("Could not find content root folder!");
+                }
+
+                directoryInfo = directoryInfo.Parent;
             }
 
             var webMvcFolder = Path.Combine(directoryInfo.FullName, "src", "Dukkan.Web.Mvc");

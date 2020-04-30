@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Dukkan.Authorization.Users.Dto;
-using Dukkan.Authorization.Users.Services;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
+using Dukkan.Users;
+using Dukkan.Users.Dto;
 
 namespace Dukkan.Tests.Users
 {
@@ -20,7 +20,7 @@ namespace Dukkan.Tests.Users
         public async Task GetUsers_Test()
         {
             // Act
-            var output = await _userAppService.GetAllAsync(new UserGetAllPagedInput {MaxResultCount = 20, SkipCount = 0});
+            var output = await _userAppService.GetAllAsync(new PagedUserResultRequestDto{MaxResultCount=20, SkipCount=0} );
 
             // Assert
             output.Items.Count.ShouldBeGreaterThan(0);
@@ -31,7 +31,7 @@ namespace Dukkan.Tests.Users
         {
             // Act
             await _userAppService.CreateAsync(
-                new UserCreateDto
+                new CreateUserDto
                 {
                     EmailAddress = "john@volosoft.com",
                     IsActive = true,
