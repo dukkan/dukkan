@@ -18,7 +18,7 @@ namespace Dukkan.Catalog
 
         public ICollection<CategoryTranslation> Translations
         {
-            get => _translations ?? (_translations = new List<CategoryTranslation>());
+            get => _translations ??= new List<CategoryTranslation>();
             set => _translations = value;
         }
     }

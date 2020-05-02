@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Dukkan.Users.Dto
+namespace Dukkan.Authorization.Users.Dto
 {
     public class ChangeUserLanguageDto
     {

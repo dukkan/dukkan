@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Dukkan.Roles.Dto
+namespace Dukkan.Authorization.Roles.Dto
 {
     public class GetRoleForEditOutput
     {

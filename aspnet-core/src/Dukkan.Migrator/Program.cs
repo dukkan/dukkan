@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Castle.Facilities.Logging;
 using Abp;
 using Abp.Castle.Logging.Log4Net;
@@ -43,12 +44,10 @@ namespace Dukkan.Migrator
             }
         }
 
-        private static void ParseArgs(string[] args)
+        private static void ParseArgs(ICollection<string> args)
         {
             if (args.IsNullOrEmpty())
-            {
                 return;
-            }
 
             foreach (var arg in args)
             {

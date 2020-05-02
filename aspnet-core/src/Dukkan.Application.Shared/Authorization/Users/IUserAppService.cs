@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
-using Dukkan.Roles.Dto;
-using Dukkan.Users.Dto;
+using Dukkan.Authorization.Roles.Dto;
+using Dukkan.Authorization.Users.Dto;
 
-namespace Dukkan.Users
+namespace Dukkan.Authorization.Users
 {
     public interface IUserAppService : IAsyncCrudAppService<UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>
     {

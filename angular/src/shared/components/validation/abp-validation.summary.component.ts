@@ -14,7 +14,7 @@ import { AbpValidationError } from './abp-validation.api';
   selector: 'abp-validation-summary',
   templateUrl: './abp-validation.summary.component.html'
 })
-export class ApbValidationSummaryComponent extends AppComponentBase
+export class AbpValidationSummaryComponent extends AppComponentBase
   implements OnInit {
   @Input() control: AbstractControl;
   @Input() controlEl: ElementRef;

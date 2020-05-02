@@ -13,16 +13,14 @@ using Abp.Linq.Extensions;
 using Abp.Localization;
 using Abp.Runtime.Session;
 using Abp.UI;
-using Dukkan.Authorization;
 using Dukkan.Authorization.Accounts;
 using Dukkan.Authorization.Roles;
-using Dukkan.Authorization.Users;
-using Dukkan.Roles.Dto;
-using Dukkan.Users.Dto;
+using Dukkan.Authorization.Roles.Dto;
+using Dukkan.Authorization.Users.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dukkan.Users
+namespace Dukkan.Authorization.Users
 {
     [AbpAuthorize(PermissionNames.Pages_Users)]
     public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService

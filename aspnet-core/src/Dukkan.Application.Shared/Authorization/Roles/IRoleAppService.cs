@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Abp.Application.Services;
 using Abp.Application.Services.Dto;
-using Dukkan.Roles.Dto;
+using Dukkan.Authorization.Roles.Dto;
 
-namespace Dukkan.Roles
+namespace Dukkan.Authorization.Roles
 {
     public interface IRoleAppService : IAsyncCrudAppService<RoleDto, int, PagedRoleResultRequestDto, CreateRoleDto, RoleDto>
     {

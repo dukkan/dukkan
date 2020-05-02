@@ -3,7 +3,7 @@ using Abp.Auditing;
 using Abp.Authorization.Users;
 using Abp.Runtime.Validation;
 
-namespace Dukkan.Users.Dto
+namespace Dukkan.Authorization.Users.Dto
 {
     public class CreateUserDto : IShouldNormalize
     {

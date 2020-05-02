@@ -8,14 +8,12 @@ using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.IdentityFramework;
 using Abp.Linq.Extensions;
-using Dukkan.Authorization;
-using Dukkan.Authorization.Roles;
+using Dukkan.Authorization.Roles.Dto;
 using Dukkan.Authorization.Users;
-using Dukkan.Roles.Dto;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dukkan.Roles
+namespace Dukkan.Authorization.Roles
 {
     [AbpAuthorize(PermissionNames.Pages_Roles)]
     public class RoleAppService : AsyncCrudAppService<Role, RoleDto, int, PagedRoleResultRequestDto, CreateRoleDto, RoleDto>, IRoleAppService

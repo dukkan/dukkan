@@ -1,14 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using Dukkan.Authorization;
+﻿using Dukkan.Authorization;
 using Dukkan.Authorization.Roles;
 using Dukkan.Authorization.Users;
 using Dukkan.Editions;
 using Dukkan.MultiTenancy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Dukkan.Identity
 {
-    public static class IdentityRegistrar
+    public class IdentityRegistrar
     {
         public static IdentityBuilder Register(IServiceCollection services)
         {
@@ -23,10 +23,11 @@ namespace Dukkan.Identity
                 .AddAbpRoleStore<RoleStore>()
                 .AddAbpLogInManager<LogInManager>()
                 .AddAbpSignInManager<SignInManager>()
-                .AddAbpSecurityStampValidator<SecurityStampValidator>()
+                .AddAbpSecurityStampValidator<Identity.SecurityStampValidator>()
                 .AddAbpUserClaimsPrincipalFactory<UserClaimsPrincipalFactory>()
                 .AddPermissionChecker<PermissionChecker>()
                 .AddDefaultTokenProviders();
         }
+
     }
 }

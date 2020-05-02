@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 using Abp.Authorization.Users;
 
-namespace Dukkan.Users.Dto
+namespace Dukkan.Authorization.Users.Dto
 {
     public class UserDto : EntityDto<long>
     {

@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Dukkan.Authorization.Users;
+using Dukkan.Authorization.Users.Dto;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 using Xunit;
-using Dukkan.Users;
-using Dukkan.Users.Dto;
 
 namespace Dukkan.Tests.Users
 {

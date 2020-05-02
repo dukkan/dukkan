@@ -7,11 +7,11 @@ using Dukkan.Authorization.Users;
 using Dukkan.Catalog;
 using Dukkan.Catalog.Dto;
 using Dukkan.MultiTenancy;
-using Dukkan.MultiTenancy.Dto;
-using Dukkan.Roles.Dto;
 using Dukkan.Sessions.Dto;
-using Dukkan.Users.Dto;
 using System.Linq;
+using Dukkan.Authorization.Roles.Dto;
+using Dukkan.Authorization.Users.Dto;
+using Dukkan.MultiTenancy.Dto;
 
 namespace Dukkan
 {

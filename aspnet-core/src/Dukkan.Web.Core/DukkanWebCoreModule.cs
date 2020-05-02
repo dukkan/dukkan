@@ -2,13 +2,12 @@
 using System.Text;
 using Abp.AspNetCore;
 using Abp.AspNetCore.Configuration;
-using Abp.AspNetCore.SignalR;
 using Abp.Modules;
 using Abp.Reflection.Extensions;
 using Abp.Zero.Configuration;
+using Dukkan.Configuration;
 using Dukkan.EntityFrameworkCore;
 using Dukkan.Web.Authentication.JwtBearer;
-using Dukkan.Web.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 using Microsoft.Extensions.Configuration;
@@ -19,17 +18,14 @@ namespace Dukkan.Web
     [DependsOn(
         typeof(DukkanApplicationModule),
         typeof(DukkanEntityFrameworkModule),
-        typeof(AbpAspNetCoreModule),
-        typeof(AbpAspNetCoreSignalRModule)
+        typeof(AbpAspNetCoreModule)
     )]
     public class DukkanWebCoreModule : AbpModule
     {
-        private readonly IWebHostEnvironment _env;
         private readonly IConfigurationRoot _appConfiguration;
 
         public DukkanWebCoreModule(IWebHostEnvironment env)
         {
-            _env = env;
             _appConfiguration = env.GetAppConfiguration();
         }
 

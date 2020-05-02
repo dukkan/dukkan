@@ -13,23 +13,23 @@ namespace Dukkan.Catalog
 {
     public class CategoryAppService : DukkanAppServiceBase, ICategoryAppService
     {
-        private readonly IRepository<Category> _categoryrepository;
+        private readonly IRepository<Category> _categoryRepository;
 
-        public CategoryAppService(IRepository<Category> categoryrepository)
+        public CategoryAppService(IRepository<Category> categoryRepository)
         {
-            _categoryrepository = categoryrepository;
+            _categoryRepository = categoryRepository;
         }
 
         private IQueryable<Category> CreateCategoryQuery(bool includeTranslations = true)
         {
-            var query = _categoryrepository.GetAll();
+            var query = _categoryRepository.GetAll();
             if (includeTranslations)
                 query = query.Include(x => x.Translations);
 
             return query;
         }
 
-        private IQueryable<Category> ApplyCategoryFilter(IQueryable<Category> query, CategoryGetAllPagedInput input)
+        private static IQueryable<Category> ApplyCategoryFilter(IQueryable<Category> query, CategoryGetAllPagedInput input)
         {
             if (input == null)
                 return query;
@@ -46,7 +46,7 @@ namespace Dukkan.Catalog
             return ObjectMapper.Map<List<CategoryListDto>>(entities);
         }
 
-        private void TranslateCategory(List<CategoryTranslationEditDto> editDtos, Category category)
+        private void TranslateCategory(IEnumerable<CategoryTranslationEditDto> editDtos, Category category)
         {
             foreach (var editDto in editDtos)
             {
@@ -87,12 +87,12 @@ namespace Dukkan.Catalog
 
             TranslateCategory(input.Translations, entity);
 
-            await _categoryrepository.InsertAsync(entity);
+            await _categoryRepository.InsertAsync(entity);
         }
 
         private async Task EditCategoryAsync(CategoryEditDto input)
         {
-            var entity = await _categoryrepository.GetAllIncluding(x => x.Translations)
+            var entity = await _categoryRepository.GetAllIncluding(x => x.Translations)
                 .FirstOrDefaultAsync(x => x.Id == input.Id);
 
             ObjectMapper.Map(input, entity);
@@ -122,7 +122,7 @@ namespace Dukkan.Catalog
 
         public async Task<CategoryEditDto> GetForEditAsync(EntityDto input)
         {
-            var entity = await _categoryrepository.GetAllIncluding(x => x.Translations)
+            var entity = await _categoryRepository.GetAllIncluding(x => x.Translations)
                 .FirstOrDefaultAsync(x => x.Id == input.Id);
 
             return ObjectMapper.Map<CategoryEditDto>(entity);
@@ -142,7 +142,7 @@ namespace Dukkan.Catalog
 
         public async Task RemoveAsync(EntityDto input)
         {
-            await _categoryrepository.DeleteAsync(input.Id);
+            await _categoryRepository.DeleteAsync(input.Id);
         }
     }
 }

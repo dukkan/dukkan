@@ -1,6 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
 
-namespace Dukkan.Roles.Dto
+namespace Dukkan.Authorization.Roles.Dto
 {
     public class PagedRoleResultRequestDto : PagedResultRequestDto
     {

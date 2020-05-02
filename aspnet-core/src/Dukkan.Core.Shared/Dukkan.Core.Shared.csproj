@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Abp" Version="5.6.0" />
     <PackageReference Include="Abp.Zero.Common" Version="5.6.0" />
   </ItemGroup>
 </Project>

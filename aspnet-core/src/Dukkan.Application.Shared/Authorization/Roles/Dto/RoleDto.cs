@@ -2,9 +2,8 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Abp.Application.Services.Dto;
 using Abp.Authorization.Roles;
-using Dukkan.Authorization.Roles;
 
-namespace Dukkan.Roles.Dto
+namespace Dukkan.Authorization.Roles.Dto
 {
     public class RoleDto : EntityDto<int>
     {

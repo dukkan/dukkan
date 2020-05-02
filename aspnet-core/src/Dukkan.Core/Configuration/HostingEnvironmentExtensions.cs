@@ -1,9 +1,8 @@
-﻿using Dukkan.Configuration;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
-namespace Dukkan.Web.Configuration
+namespace Dukkan.Configuration
 {
     public static class HostingEnvironmentExtensions
     {

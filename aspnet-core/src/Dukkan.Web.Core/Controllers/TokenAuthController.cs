@@ -8,14 +8,11 @@ using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.MultiTenancy;
 using Abp.Runtime.Security;
-using Abp.UI;
 using Dukkan.Authorization;
 using Dukkan.Authorization.Users;
 using Dukkan.MultiTenancy;
-using Dukkan.Web.Authentication.External;
 using Dukkan.Web.Authentication.JwtBearer;
 using Dukkan.Web.Models.TokenAuth;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dukkan.Web.Controllers
@@ -23,162 +20,34 @@ namespace Dukkan.Web.Controllers
     [Route("api/[controller]/[action]")]
     public class TokenAuthController : DukkanControllerBase
     {
+        #region Fields
+
         private readonly LogInManager _logInManager;
         private readonly ITenantCache _tenantCache;
         private readonly AbpLoginResultTypeHelper _abpLoginResultTypeHelper;
         private readonly TokenAuthConfiguration _configuration;
-        private readonly IExternalAuthConfiguration _externalAuthConfiguration;
-        private readonly IExternalAuthManager _externalAuthManager;
-        private readonly UserRegistrationManager _userRegistrationManager;
 
-        public TokenAuthController(
-            LogInManager logInManager,
+        #endregion
+
+        #region Ctor
+
+        public TokenAuthController(LogInManager logInManager,
             ITenantCache tenantCache,
             AbpLoginResultTypeHelper abpLoginResultTypeHelper,
-            TokenAuthConfiguration configuration,
-            IExternalAuthConfiguration externalAuthConfiguration,
-            IExternalAuthManager externalAuthManager,
-            UserRegistrationManager userRegistrationManager)
+            TokenAuthConfiguration configuration)
         {
             _logInManager = logInManager;
             _tenantCache = tenantCache;
             _abpLoginResultTypeHelper = abpLoginResultTypeHelper;
             _configuration = configuration;
-            _externalAuthConfiguration = externalAuthConfiguration;
-            _externalAuthManager = externalAuthManager;
-            _userRegistrationManager = userRegistrationManager;
         }
 
-        [HttpPost]
-        public async Task<AuthenticateResultModel> Authenticate([FromBody] AuthenticateModel model)
-        {
-            var loginResult = await GetLoginResultAsync(
-                model.UserNameOrEmailAddress,
-                model.Password,
-                GetTenancyNameOrNull()
-            );
+        #endregion
 
-            var accessToken = CreateAccessToken(CreateJwtClaims(loginResult.Identity));
+        #region Utilities
 
-            return new AuthenticateResultModel
-            {
-                AccessToken = accessToken,
-                EncryptedAccessToken = GetEncryptedAccessToken(accessToken),
-                ExpireInSeconds = (int)_configuration.Expiration.TotalSeconds,
-                UserId = loginResult.User.Id
-            };
-        }
-
-        [HttpGet]
-        public List<ExternalLoginProviderInfoModel> GetExternalAuthenticationProviders()
-        {
-            return ObjectMapper.Map<List<ExternalLoginProviderInfoModel>>(_externalAuthConfiguration.Providers);
-        }
-
-        [HttpPost]
-        public async Task<ExternalAuthenticateResultModel> ExternalAuthenticate([FromBody] ExternalAuthenticateModel model)
-        {
-            var externalUser = await GetExternalUserInfo(model);
-
-            var loginResult = await _logInManager.LoginAsync(new UserLoginInfo(model.AuthProvider, model.ProviderKey, model.AuthProvider), GetTenancyNameOrNull());
-
-            switch (loginResult.Result)
-            {
-                case AbpLoginResultType.Success:
-                    {
-                        var accessToken = CreateAccessToken(CreateJwtClaims(loginResult.Identity));
-                        return new ExternalAuthenticateResultModel
-                        {
-                            AccessToken = accessToken,
-                            EncryptedAccessToken = GetEncryptedAccessToken(accessToken),
-                            ExpireInSeconds = (int)_configuration.Expiration.TotalSeconds
-                        };
-                    }
-                case AbpLoginResultType.UnknownExternalLogin:
-                    {
-                        var newUser = await RegisterExternalUserAsync(externalUser);
-                        if (!newUser.IsActive)
-                        {
-                            return new ExternalAuthenticateResultModel
-                            {
-                                WaitingForActivation = true
-                            };
-                        }
-
-                        // Try to login again with newly registered user!
-                        loginResult = await _logInManager.LoginAsync(new UserLoginInfo(model.AuthProvider, model.ProviderKey, model.AuthProvider), GetTenancyNameOrNull());
-                        if (loginResult.Result != AbpLoginResultType.Success)
-                        {
-                            throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(
-                                loginResult.Result,
-                                model.ProviderKey,
-                                GetTenancyNameOrNull()
-                            );
-                        }
-
-                        return new ExternalAuthenticateResultModel
-                        {
-                            AccessToken = CreateAccessToken(CreateJwtClaims(loginResult.Identity)),
-                            ExpireInSeconds = (int)_configuration.Expiration.TotalSeconds
-                        };
-                    }
-                default:
-                    {
-                        throw _abpLoginResultTypeHelper.CreateExceptionForFailedLoginAttempt(
-                            loginResult.Result,
-                            model.ProviderKey,
-                            GetTenancyNameOrNull()
-                        );
-                    }
-            }
-        }
-
-        private async Task<User> RegisterExternalUserAsync(ExternalAuthUserInfo externalUser)
-        {
-            var user = await _userRegistrationManager.RegisterAsync(
-                externalUser.Name,
-                externalUser.Surname,
-                externalUser.EmailAddress,
-                externalUser.EmailAddress,
-                Authorization.Users.User.CreateRandomPassword(),
-                true
-            );
-
-            user.Logins = new List<UserLogin>
-            {
-                new UserLogin
-                {
-                    LoginProvider = externalUser.Provider,
-                    ProviderKey = externalUser.ProviderKey,
-                    TenantId = user.TenantId
-                }
-            };
-
-            await CurrentUnitOfWork.SaveChangesAsync();
-
-            return user;
-        }
-
-        private async Task<ExternalAuthUserInfo> GetExternalUserInfo(ExternalAuthenticateModel model)
-        {
-            var userInfo = await _externalAuthManager.GetUserInfo(model.AuthProvider, model.ProviderAccessCode);
-            if (userInfo.ProviderKey != model.ProviderKey)
-            {
-                throw new UserFriendlyException(L("CouldNotValidateExternalUser"));
-            }
-
-            return userInfo;
-        }
-
-        private string GetTenancyNameOrNull()
-        {
-            if (!AbpSession.TenantId.HasValue)
-            {
-                return null;
-            }
-
-            return _tenantCache.GetOrNull(AbpSession.TenantId.Value)?.TenancyName;
-        }
+        private string GetTenancyNameOrNull() =>
+            !AbpSession.TenantId.HasValue ? null : _tenantCache.GetOrNull(AbpSession.TenantId.Value)?.TenancyName;
 
         private async Task<AbpLoginResult<Tenant, User>> GetLoginResultAsync(string usernameOrEmailAddress, string password, string tenancyName)
         {
@@ -209,7 +78,7 @@ namespace Dukkan.Web.Controllers
             return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
         }
 
-        private static List<Claim> CreateJwtClaims(ClaimsIdentity identity)
+        private static IEnumerable<Claim> CreateJwtClaims(ClaimsIdentity identity)
         {
             var claims = identity.Claims.ToList();
             var nameIdClaim = claims.First(c => c.Type == ClaimTypes.NameIdentifier);
@@ -225,9 +94,33 @@ namespace Dukkan.Web.Controllers
             return claims;
         }
 
-        private string GetEncryptedAccessToken(string accessToken)
+        private static string GetEncryptedAccessToken(string accessToken) =>
+            SimpleStringCipher.Instance.Encrypt(accessToken, AppConsts.DefaultPassPhrase);
+
+        #endregion
+
+        #region Methods
+
+        [HttpPost]
+        public async Task<AuthenticateResultModel> Authenticate([FromBody] AuthenticateModel model)
         {
-            return SimpleStringCipher.Instance.Encrypt(accessToken, AppConsts.DefaultPassPhrase);
+            var loginResult = await GetLoginResultAsync(
+                model.UserNameOrEmailAddress,
+                model.Password,
+                GetTenancyNameOrNull()
+            );
+
+            var accessToken = CreateAccessToken(CreateJwtClaims(loginResult.Identity));
+
+            return new AuthenticateResultModel
+            {
+                AccessToken = accessToken,
+                EncryptedAccessToken = GetEncryptedAccessToken(accessToken),
+                ExpireInSeconds = (int)_configuration.Expiration.TotalSeconds,
+                UserId = loginResult.User.Id
+            };
         }
+
+        #endregion
     }
 }

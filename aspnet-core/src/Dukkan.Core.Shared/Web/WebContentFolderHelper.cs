@@ -13,7 +13,7 @@ namespace Dukkan.Web
     {
         public static string CalculateContentRootFolder()
         {
-            var coreAssemblyDirectoryPath = Path.GetDirectoryName(typeof(DukkanCoreModule).GetAssembly().Location);
+            var coreAssemblyDirectoryPath = Path.GetDirectoryName(typeof(DukkanCoreSharedModule).GetAssembly().Location);
             if (coreAssemblyDirectoryPath == null)
             {
                 throw new Exception("Could not find location of Dukkan.Core assembly!");
@@ -22,12 +22,7 @@ namespace Dukkan.Web
             var directoryInfo = new DirectoryInfo(coreAssemblyDirectoryPath);
             while (!DirectoryContains(directoryInfo.FullName, "Dukkan.sln"))
             {
-                if (directoryInfo.Parent == null)
-                {
-                    throw new Exception("Could not find content root folder!");
-                }
-
-                directoryInfo = directoryInfo.Parent;
+                directoryInfo = directoryInfo.Parent ?? throw new Exception("Could not find content root folder!");
             }
 
             var webMvcFolder = Path.Combine(directoryInfo.FullName, "src", "Dukkan.Web.Mvc");
