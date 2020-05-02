@@ -1,1 +1,1 @@
-A developer friendly e-commerce solution built on asp.net core
+A developer friendly e-commerce solution built on ASP.NET Boilerplate
