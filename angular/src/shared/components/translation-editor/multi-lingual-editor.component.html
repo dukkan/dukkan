@@ -1,0 +1,52 @@
+<ng-container *ngIf="translations && translations.length > 1">
+  <ng-container
+    *ngIf="translations.length > 1 && translationsDirective; else defaultTpl"
+  >
+    <tabset>
+      <ng-container
+        *ngFor="
+          let translation of translations;
+          let index = index;
+          let isDefault = first
+        "
+      >
+        <tab class="pt-3 px-2">
+          <ng-container *ngIf="isDefault">
+            <ng-template tabHeading>
+              {{ "Default" | localize }}
+            </ng-template>
+            <ng-container *ngTemplateOutlet="defaultTpl"></ng-container>
+          </ng-container>
+
+          <ng-container *ngIf="!isDefault">
+            <ng-template tabHeading>
+              <i
+                class="d-inline-block mr-1 {{
+                  languageByNameMap[translation.language].icon
+                }}"
+              ></i>
+              <span>
+                {{ languageByNameMap[translation.language].displayName }}
+              </span>
+            </ng-template>
+            <ng-container
+              *ngTemplateOutlet="
+                translationsDirective?.template;
+                context: { index: index }
+              "
+            ></ng-container>
+          </ng-container>
+        </tab>
+      </ng-container>
+    </tabset>
+  </ng-container>
+</ng-container>
+
+<ng-template #defaultTpl>
+  <ng-container
+    *ngTemplateOutlet="
+      defaultDirective?.template;
+      context: { index: defaultDirective?.defaultIndex }
+    "
+  ></ng-container>
+</ng-template>

@@ -13,7 +13,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TableModule } from 'primeng/components/table/table';
 import { PaginatorModule } from 'primeng/components/paginator/paginator';
 import { CategoryAddOrEditModalComponent } from './category-add-or-edit-modal.component';
-import { CategoryTranslationAreaComponent } from './category-translation-area.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 
 @NgModule({
@@ -33,11 +32,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
     PaginatorModule,
     CategoryRoutingModule,
   ],
-  declarations: [
-    CategoriesComponent,
-    CategoryAddOrEditModalComponent,
-    CategoryTranslationAreaComponent,
-  ],
+  declarations: [CategoriesComponent, CategoryAddOrEditModalComponent],
   entryComponents: [CategoryAddOrEditModalComponent],
 })
 export class CategoryModule {}

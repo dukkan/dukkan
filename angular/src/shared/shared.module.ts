@@ -19,6 +19,8 @@ import { LayoutStoreService } from './layout/layout-store.service';
 
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
+import { MultiLingualEditorComponent, MultiLingualEditorTranslationsDirective, MultiLingualEditorDefaultDirective } from './components/translation-editor/multi-lingual-editor.component';
+import { MultiLingualModelService } from './components/translation-editor/multi-lingual-model.service';
 
 @NgModule({
   imports: [
@@ -36,6 +38,9 @@ import { EqualValidator } from './directives/equal-validator.directive';
     LocalizePipe,
     BusyDirective,
     EqualValidator,
+    MultiLingualEditorComponent,
+    MultiLingualEditorTranslationsDirective,
+    MultiLingualEditorDefaultDirective,
   ],
   exports: [
     AbpPaginationControlsComponent,
@@ -45,6 +50,9 @@ import { EqualValidator } from './directives/equal-validator.directive';
     LocalizePipe,
     BusyDirective,
     EqualValidator,
+    MultiLingualEditorComponent,
+    MultiLingualEditorTranslationsDirective,
+    MultiLingualEditorDefaultDirective,
   ],
 })
 export class SharedModule {
@@ -57,6 +65,7 @@ export class SharedModule {
         AppAuthService,
         AppRouteGuard,
         LayoutStoreService,
+        MultiLingualModelService,
       ],
     };
   }

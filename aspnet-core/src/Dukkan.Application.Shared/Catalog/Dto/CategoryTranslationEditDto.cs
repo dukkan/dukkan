@@ -13,17 +13,12 @@ namespace Dukkan.Catalog.Dto
 
         public string Language { get; set; }
 
-        public bool IsDefault { get; set; }
-
         public bool IsDirty() => !Name.IsNullOrEmpty() || !Description.IsNullOrEmpty();
 
         public void AddValidationErrors(CustomValidationContext context)
         {
-            if (IsDefault && Name.IsNullOrEmpty())
+            if (Language.IsNullOrEmpty() && Name.IsNullOrEmpty())
                 context.Results.Add(new ValidationResult("The Name field is required"));
-
-            if (!IsDefault && Language.IsNullOrEmpty())
-                context.Results.Add(new ValidationResult("The Language field is required"));
         }
     }
 }

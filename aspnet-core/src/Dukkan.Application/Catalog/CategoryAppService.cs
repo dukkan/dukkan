@@ -1,4 +1,5 @@
-﻿using Abp.Application.Services.Dto;
+﻿using System;
+using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.Linq.Extensions;
@@ -48,35 +49,33 @@ namespace Dukkan.Catalog
 
         private void TranslateCategory(IEnumerable<CategoryTranslationEditDto> editDtos, Category category)
         {
+            if (category == null)
+                throw new ArgumentNullException(nameof(category));
+
             foreach (var editDto in editDtos)
             {
                 var translation = category.Translations?.FirstOrDefault(x => x.Language == editDto.Language);
-                if (translation == null)//insert
+                if (translation != null)
+                {
+                    if (!editDto.IsDirty())
+                    {
+                        //delete
+                        category.Translations.Remove(translation);
+                    }
+                    else
+                    {
+                        //update
+                        ObjectMapper.Map(editDto, translation);
+                    }
+                }
+                else
                 {
                     if (!editDto.IsDirty())
                         continue;
 
+                    //insert
                     translation = ObjectMapper.Map<CategoryTranslation>(editDto);
-                    category.Translations.Add(translation);
-                }
-                else
-                {
-                    if (editDto.IsDefault)
-                    {
-                        //! always update
-                        ObjectMapper.Map(editDto, translation);
-                        continue;
-                    }
-
-                    if (editDto.IsDirty())//update
-                    {
-                        ObjectMapper.Map(editDto, translation);
-                    }
-                    else//delete
-                    {
-                        if (category.Translations.Count > 1)//at least one translation required
-                            category.Translations.Remove(translation);
-                    }
+                    category.Translations?.Add(translation);
                 }
             }
         }

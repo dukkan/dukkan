@@ -9,11 +9,85 @@
     (onCloseClick)="bsModalRef.hide()"
   ></abp-modal-header>
   <div class="modal-body">
-    {{ editDto.translations | json }}
-    <br />
-    <category-translation-area
-      [translations]="editDto.translations"
-    ></category-translation-area>
+    <multi-lingual-editor [translations]="editDto.translations">
+      <ng-container *multiLingualEditorDefault="let i = index">
+        <div class="form-group row required">
+          <label class="col-md-3 col-form-label" for="name">
+            {{ "Name" | localize }}
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control"
+              id="translations[{{ i }}].name"
+              name="translations[{{ i }}].name"
+              required
+              maxlength="32"
+              [(ngModel)]="(editDto?.translations)[i].name"
+              #nameModel="ngModel"
+              #nameEl
+            />
+            <abp-validation-summary
+              [control]="nameModel"
+              [controlEl]="nameEl"
+            ></abp-validation-summary>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="description">
+            {{ "Description" | localize }}
+          </label>
+          <div class="col-md-9">
+            <textarea
+              type="text"
+              class="form-control"
+              id="translations[{{ i }}].description"
+              name="translations[{{ i }}].description"
+              [(ngModel)]="(editDto?.translations)[i].description"
+              cols="5"
+            ></textarea>
+          </div>
+        </div>
+      </ng-container>
+      <ng-container *multiLingualEditorTranslations="let i = index">
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="name">
+            {{ "Name" | localize }}
+          </label>
+          <div class="col-md-9">
+            <input
+              type="text"
+              class="form-control"
+              id="translations[{{ i }}].name"
+              name="translations[{{ i }}].name"
+              maxlength="32"
+              [(ngModel)]="(editDto?.translations)[i].name"
+              #nameModel="ngModel"
+              #nameEl
+            />
+            <abp-validation-summary
+              [control]="nameModel"
+              [controlEl]="nameEl"
+            ></abp-validation-summary>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="description">
+            {{ "Description" | localize }}
+          </label>
+          <div class="col-md-9">
+            <textarea
+              type="text"
+              class="form-control"
+              id="translations[{{ i }}].description"
+              name="translations[{{ i }}].description"
+              [(ngModel)]="(editDto?.translations)[i].description"
+              cols="5"
+            ></textarea>
+          </div>
+        </div>
+      </ng-container>
+    </multi-lingual-editor>
     <div class="form-group row">
       <label class="col-md-3 col-form-label" for="parentCategoryId">
         {{ "ParentCategory" | localize }}

@@ -22,7 +22,6 @@
     "@angular/platform-browser": "^8.2.4",
     "@angular/platform-browser-dynamic": "^8.2.4",
     "@angular/router": "^8.2.4",
-    "@aspnet/signalr": "^1.1.4",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "abp-ng2-module": "^5.1.1",
     "abp-web-resources": "^5.1.1",

@@ -1264,117 +1264,6 @@ export class TokenAuthServiceProxy {
         }
         return _observableOf<AuthenticateResultModel>(<any>null);
     }
-
-    /**
-     * @return Success
-     */
-    getExternalAuthenticationProviders(): Observable<ExternalLoginProviderInfoModel[]> {
-        let url_ = this.baseUrl + "/api/TokenAuth/GetExternalAuthenticationProviders";
-        url_ = url_.replace(/[?&]$/, "");
-
-        let options_ : any = {
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processGetExternalAuthenticationProviders(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processGetExternalAuthenticationProviders(<any>response_);
-                } catch (e) {
-                    return <Observable<ExternalLoginProviderInfoModel[]>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<ExternalLoginProviderInfoModel[]>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processGetExternalAuthenticationProviders(response: HttpResponseBase): Observable<ExternalLoginProviderInfoModel[]> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            if (Array.isArray(resultData200)) {
-                result200 = [] as any;
-                for (let item of resultData200)
-                    result200.push(ExternalLoginProviderInfoModel.fromJS(item));
-            }
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ExternalLoginProviderInfoModel[]>(<any>null);
-    }
-
-    /**
-     * @param body (optional) 
-     * @return Success
-     */
-    externalAuthenticate(body: ExternalAuthenticateModel | undefined): Observable<ExternalAuthenticateResultModel> {
-        let url_ = this.baseUrl + "/api/TokenAuth/ExternalAuthenticate";
-        url_ = url_.replace(/[?&]$/, "");
-
-        const content_ = JSON.stringify(body);
-
-        let options_ : any = {
-            body: content_,
-            observe: "response",
-            responseType: "blob",
-            headers: new HttpHeaders({
-                "Content-Type": "application/json-patch+json",
-                "Accept": "text/plain"
-            })
-        };
-
-        return this.http.request("post", url_, options_).pipe(_observableMergeMap((response_ : any) => {
-            return this.processExternalAuthenticate(response_);
-        })).pipe(_observableCatch((response_: any) => {
-            if (response_ instanceof HttpResponseBase) {
-                try {
-                    return this.processExternalAuthenticate(<any>response_);
-                } catch (e) {
-                    return <Observable<ExternalAuthenticateResultModel>><any>_observableThrow(e);
-                }
-            } else
-                return <Observable<ExternalAuthenticateResultModel>><any>_observableThrow(response_);
-        }));
-    }
-
-    protected processExternalAuthenticate(response: HttpResponseBase): Observable<ExternalAuthenticateResultModel> {
-        const status = response.status;
-        const responseBlob =
-            response instanceof HttpResponse ? response.body :
-            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
-
-        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
-        if (status === 200) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            let result200: any = null;
-            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ExternalAuthenticateResultModel.fromJS(resultData200);
-            return _observableOf(result200);
-            }));
-        } else if (status !== 200 && status !== 204) {
-            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
-            }));
-        }
-        return _observableOf<ExternalAuthenticateResultModel>(<any>null);
-    }
 }
 
 @Injectable()
@@ -2214,8 +2103,7 @@ export interface IPagedResultDtoOfCategoryListDto {
 export class CategoryTranslationEditDto implements ICategoryTranslationEditDto {
     name: string | undefined;
     description: string | undefined;
-    language: string;
-    isDefault: boolean;
+    language: string | undefined;
 
     constructor(data?: ICategoryTranslationEditDto) {
         if (data) {
@@ -2231,7 +2119,6 @@ export class CategoryTranslationEditDto implements ICategoryTranslationEditDto {
             this.name = _data["name"];
             this.description = _data["description"];
             this.language = _data["language"];
-            this.isDefault = _data["isDefault"];
         }
     }
 
@@ -2247,7 +2134,6 @@ export class CategoryTranslationEditDto implements ICategoryTranslationEditDto {
         data["name"] = this.name;
         data["description"] = this.description;
         data["language"] = this.language;
-        data["isDefault"] = this.isDefault;
         return data; 
     }
 
@@ -2262,15 +2148,14 @@ export class CategoryTranslationEditDto implements ICategoryTranslationEditDto {
 export interface ICategoryTranslationEditDto {
     name: string | undefined;
     description: string | undefined;
-    language: string;
-    isDefault: boolean;
+    language: string | undefined;
 }
 
 export class CategoryEditDto implements ICategoryEditDto {
     parentCategoryId: number;
     published: boolean;
     displayOrder: number;
-    translations: CategoryTranslationEditDto[] | undefined;
+    translations: CategoryTranslationEditDto[];
     id: number | undefined;
 
     constructor(data?: ICategoryEditDto) {
@@ -2279,6 +2164,9 @@ export class CategoryEditDto implements ICategoryEditDto {
                 if (data.hasOwnProperty(property))
                     (<any>this)[property] = (<any>data)[property];
             }
+        }
+        if (!data) {
+            this.translations = [];
         }
     }
 
@@ -2329,7 +2217,7 @@ export interface ICategoryEditDto {
     parentCategoryId: number;
     published: boolean;
     displayOrder: number;
-    translations: CategoryTranslationEditDto[] | undefined;
+    translations: CategoryTranslationEditDto[];
     id: number | undefined;
 }
 
@@ -3420,159 +3308,6 @@ export interface IAuthenticateResultModel {
     encryptedAccessToken: string | undefined;
     expireInSeconds: number;
     userId: number;
-}
-
-export class ExternalLoginProviderInfoModel implements IExternalLoginProviderInfoModel {
-    name: string | undefined;
-    clientId: string | undefined;
-
-    constructor(data?: IExternalLoginProviderInfoModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.name = _data["name"];
-            this.clientId = _data["clientId"];
-        }
-    }
-
-    static fromJS(data: any): ExternalLoginProviderInfoModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new ExternalLoginProviderInfoModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["name"] = this.name;
-        data["clientId"] = this.clientId;
-        return data; 
-    }
-
-    clone(): ExternalLoginProviderInfoModel {
-        const json = this.toJSON();
-        let result = new ExternalLoginProviderInfoModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IExternalLoginProviderInfoModel {
-    name: string | undefined;
-    clientId: string | undefined;
-}
-
-export class ExternalAuthenticateModel implements IExternalAuthenticateModel {
-    authProvider: string;
-    providerKey: string;
-    providerAccessCode: string;
-
-    constructor(data?: IExternalAuthenticateModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.authProvider = _data["authProvider"];
-            this.providerKey = _data["providerKey"];
-            this.providerAccessCode = _data["providerAccessCode"];
-        }
-    }
-
-    static fromJS(data: any): ExternalAuthenticateModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new ExternalAuthenticateModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["authProvider"] = this.authProvider;
-        data["providerKey"] = this.providerKey;
-        data["providerAccessCode"] = this.providerAccessCode;
-        return data; 
-    }
-
-    clone(): ExternalAuthenticateModel {
-        const json = this.toJSON();
-        let result = new ExternalAuthenticateModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IExternalAuthenticateModel {
-    authProvider: string;
-    providerKey: string;
-    providerAccessCode: string;
-}
-
-export class ExternalAuthenticateResultModel implements IExternalAuthenticateResultModel {
-    accessToken: string | undefined;
-    encryptedAccessToken: string | undefined;
-    expireInSeconds: number;
-    waitingForActivation: boolean;
-
-    constructor(data?: IExternalAuthenticateResultModel) {
-        if (data) {
-            for (var property in data) {
-                if (data.hasOwnProperty(property))
-                    (<any>this)[property] = (<any>data)[property];
-            }
-        }
-    }
-
-    init(_data?: any) {
-        if (_data) {
-            this.accessToken = _data["accessToken"];
-            this.encryptedAccessToken = _data["encryptedAccessToken"];
-            this.expireInSeconds = _data["expireInSeconds"];
-            this.waitingForActivation = _data["waitingForActivation"];
-        }
-    }
-
-    static fromJS(data: any): ExternalAuthenticateResultModel {
-        data = typeof data === 'object' ? data : {};
-        let result = new ExternalAuthenticateResultModel();
-        result.init(data);
-        return result;
-    }
-
-    toJSON(data?: any) {
-        data = typeof data === 'object' ? data : {};
-        data["accessToken"] = this.accessToken;
-        data["encryptedAccessToken"] = this.encryptedAccessToken;
-        data["expireInSeconds"] = this.expireInSeconds;
-        data["waitingForActivation"] = this.waitingForActivation;
-        return data; 
-    }
-
-    clone(): ExternalAuthenticateResultModel {
-        const json = this.toJSON();
-        let result = new ExternalAuthenticateResultModel();
-        result.init(json);
-        return result;
-    }
-}
-
-export interface IExternalAuthenticateResultModel {
-    accessToken: string | undefined;
-    encryptedAccessToken: string | undefined;
-    expireInSeconds: number;
-    waitingForActivation: boolean;
 }
 
 export class CreateUserDto implements ICreateUserDto {

@@ -11,8 +11,10 @@ import { AppComponentBase } from '@shared/app-component-base';
 import {
   CategoryServiceProxy,
   CategoryEditDto,
+  CategoryTranslationEditDto,
 } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash';
+import { MultiLingualModelService } from '@shared/components/translation-editor/multi-lingual-model.service';
 
 @Component({
   templateUrl: 'category-add-or-edit-modal.component.html',
@@ -27,8 +29,9 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
 
   constructor(
     injector: Injector,
-    public _categoryService: CategoryServiceProxy,
-    public bsModalRef: BsModalRef
+    public bsModalRef: BsModalRef,
+    private _categoryService: CategoryServiceProxy,
+    private _multiLingualModelService: MultiLingualModelService
   ) {
     super(injector);
   }
@@ -39,11 +42,41 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
         .getForEdit(this.id)
         .subscribe((result: CategoryEditDto) => {
           this.editDto = result;
+          this.prepareTranslationModels(true);
         });
     } else {
-      //! required for add mode
-      this.editDto.translations = [];
+      this.prepareTranslationModels();
     }
+  }
+
+  prepareTranslationModels(editMode: boolean = false): void {
+    let translationModelConfigurer: (
+      translation: CategoryTranslationEditDto,
+      language: string
+    ) => CategoryTranslationEditDto = null;
+
+    if (editMode) {
+      translationModelConfigurer = (translation, language) => {
+        var existingTranslation = _.find(
+          this.editDto.translations,
+          (x) => x.language === language
+        );
+
+        if (existingTranslation) {
+          translation.name = existingTranslation.name;
+          translation.description = existingTranslation.description;
+        }
+
+        return translation;
+      };
+    }
+
+    this.editDto.translations = _.map(
+      this._multiLingualModelService.prepareTranslationModels(
+        translationModelConfigurer
+      ),
+      (x) => new CategoryTranslationEditDto(x)
+    );
   }
 
   save(): void {
