@@ -9,16 +9,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Abp.Runtime.Caching;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Dukkan.Catalog
 {
     public class CategoryAppService : DukkanAppServiceBase, ICategoryAppService
     {
         private readonly IRepository<Category> _categoryRepository;
+        private readonly ICategoryManager _categoryManager;
 
-        public CategoryAppService(IRepository<Category> categoryRepository)
+        public CategoryAppService(IRepository<Category> categoryRepository, ICategoryManager categoryManager)
         {
             _categoryRepository = categoryRepository;
+            _categoryManager = categoryManager;
         }
 
         private IQueryable<Category> CreateCategoryQuery(bool includeTranslations = true)
@@ -44,7 +48,16 @@ namespace Dukkan.Catalog
 
         private List<CategoryListDto> ConvertToCategoryListDtos(IEnumerable<Category> entities)
         {
-            return ObjectMapper.Map<List<CategoryListDto>>(entities);
+            return entities.Select(category =>
+            {
+                //fill in model values from the entity
+                var categoryModel = ObjectMapper.Map<CategoryListDto>(category);
+
+                //fill in additional values (not existing in the entity)
+                categoryModel.Breadcrumb = _categoryManager.GetFormattedBreadCrumb(category);
+
+                return categoryModel;
+            }).ToList();
         }
 
         private void TranslateCategory(IEnumerable<CategoryTranslationEditDto> editDtos, Category category)
@@ -101,17 +114,22 @@ namespace Dukkan.Catalog
 
         public async Task<PagedResultDto<CategoryListDto>> GetAllPagedAsync(CategoryGetAllPagedInput input)
         {
-            var query = CreateCategoryQuery();
+            var query = CreateCategoryQuery()
+                .OrderBy(c => c.ParentCategoryId)
+                .ThenBy(c => c.DisplayOrder)
+                .ThenBy(c => c.Id);
             var filteredQuery = ApplyCategoryFilter(query, input);
 
             var totalCount = await filteredQuery.CountAsync();
 
-            var entities = await filteredQuery
+            var unsortedEntities = await filteredQuery
                 .OrderBy(input.Sorting ?? "id desc")
                 .PageBy(input)
                 .ToListAsync();
 
-            var dtos = ConvertToCategoryListDtos(entities);
+            var sortedCategories = _categoryManager.SortCategoriesForTree(unsortedEntities);
+
+            var dtos = ConvertToCategoryListDtos(sortedCategories);
 
             return new PagedResultDto<CategoryListDto>(
                  totalCount,
@@ -143,5 +161,29 @@ namespace Dukkan.Catalog
         {
             await _categoryRepository.DeleteAsync(input.Id);
         }
+
+
+        //public List<ComboboxItemDto> GetCategoryList(bool showHidden = false)
+        //{
+        //    var categories = GetAllCategories(showHidden: showHidden);
+        //    var listItems = categories.Select(c => new ComboboxItemDto
+        //    {
+        //        DisplayText = _categoryManager.GetFormattedBreadCrumb(c, categories),
+        //        Value = c.Id.ToString()
+        //    });
+
+        //    var result = new List<ComboboxItemDto>();
+        //    //clone the list to ensure that "selected" property is not set
+        //    foreach (var item in listItems)
+        //    {
+        //        result.Add(new ComboboxItemDto
+        //        {
+        //            DisplayText = item.Text,
+        //            Value = item.Value
+        //        });
+        //    }
+
+        //    return result;
+        //}
     }
 }

@@ -1988,6 +1988,7 @@ export class CategoryListDto implements ICategoryListDto {
     parentCategoryId: number;
     published: boolean;
     displayOrder: number;
+    breadcrumb: string | undefined;
     id: number;
 
     constructor(data?: ICategoryListDto) {
@@ -2006,6 +2007,7 @@ export class CategoryListDto implements ICategoryListDto {
             this.parentCategoryId = _data["parentCategoryId"];
             this.published = _data["published"];
             this.displayOrder = _data["displayOrder"];
+            this.breadcrumb = _data["breadcrumb"];
             this.id = _data["id"];
         }
     }
@@ -2024,6 +2026,7 @@ export class CategoryListDto implements ICategoryListDto {
         data["parentCategoryId"] = this.parentCategoryId;
         data["published"] = this.published;
         data["displayOrder"] = this.displayOrder;
+        data["breadcrumb"] = this.breadcrumb;
         data["id"] = this.id;
         return data; 
     }
@@ -2042,6 +2045,7 @@ export interface ICategoryListDto {
     parentCategoryId: number;
     published: boolean;
     displayOrder: number;
+    breadcrumb: string | undefined;
     id: number;
 }
 

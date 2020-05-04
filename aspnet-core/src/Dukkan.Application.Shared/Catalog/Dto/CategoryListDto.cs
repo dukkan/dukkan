@@ -13,5 +13,7 @@ namespace Dukkan.Catalog.Dto
         public bool Published { get; set; }
 
         public int DisplayOrder { get; set; }
+
+        public string Breadcrumb { get; set; }
     }
 }
