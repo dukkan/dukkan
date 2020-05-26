@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}"
 EndProject
@@ -13,17 +13,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.Application", "src\D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.Tests", "test\Dukkan.Tests\Dukkan.Tests.csproj", "{0D4C5D00-C144-4213-A007-4B8944113AB1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.Migrator", "src\Dukkan.Migrator\Dukkan.Migrator.csproj", "{880B3591-E057-46FE-B525-10BD83828B93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.EntityFrameworkCore.Migrator", "src\Dukkan.EntityFrameworkCore.Migrator\Dukkan.EntityFrameworkCore.Migrator.csproj", "{880B3591-E057-46FE-B525-10BD83828B93}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.Web.Host", "src\Dukkan.Web.Host\Dukkan.Web.Host.csproj", "{38E184BD-E874-4633-A947-AED4FDB73F40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.Web.Api", "src\Dukkan.Web.Api\Dukkan.Web.Api.csproj", "{38E184BD-E874-4633-A947-AED4FDB73F40}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.Web.Core", "src\Dukkan.Web.Core\Dukkan.Web.Core.csproj", "{22CFE0D2-8DCA-42D7-AD7D-784C3862493F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dukkan.EntityFrameworkCore", "src\Dukkan.EntityFrameworkCore\Dukkan.EntityFrameworkCore.csproj", "{E0580562-F8F2-4EBB-B07A-ABFC6F2C314F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.EntityFrameworkCore", "src\Dukkan.EntityFrameworkCore\Dukkan.EntityFrameworkCore.csproj", "{E0580562-F8F2-4EBB-B07A-ABFC6F2C314F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dukkan.Core.Shared", "src\Dukkan.Core.Shared\Dukkan.Core.Shared.csproj", "{E160CAA2-1CD7-4ED8-A102-6F83073858C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.Core.Shared", "src\Dukkan.Core.Shared\Dukkan.Core.Shared.csproj", "{E160CAA2-1CD7-4ED8-A102-6F83073858C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dukkan.Application.Shared", "src\Dukkan.Application.Shared\Dukkan.Application.Shared.csproj", "{30AF079D-D1D5-4692-A657-B36C8D17CD91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.Application.Shared", "src\Dukkan.Application.Shared\Dukkan.Application.Shared.csproj", "{30AF079D-D1D5-4692-A657-B36C8D17CD91}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dukkan.Web.Public", "src\Dukkan.Web.Public\Dukkan.Web.Public.csproj", "{1F7462AB-257A-45E5-BDD3-81601F73D340}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{30AF079D-D1D5-4692-A657-B36C8D17CD91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30AF079D-D1D5-4692-A657-B36C8D17CD91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30AF079D-D1D5-4692-A657-B36C8D17CD91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F7462AB-257A-45E5-BDD3-81601F73D340}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F7462AB-257A-45E5-BDD3-81601F73D340}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F7462AB-257A-45E5-BDD3-81601F73D340}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F7462AB-257A-45E5-BDD3-81601F73D340}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,5 +87,9 @@ Global
 		{E0580562-F8F2-4EBB-B07A-ABFC6F2C314F} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
 		{E160CAA2-1CD7-4ED8-A102-6F83073858C6} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
 		{30AF079D-D1D5-4692-A657-B36C8D17CD91} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
+		{1F7462AB-257A-45E5-BDD3-81601F73D340} = {AFAA0841-BD93-466F-B8F4-FB4EEC86F1FC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E23251D-743C-42E5-887B-5A84C873F348}
 	EndGlobalSection
 EndGlobal

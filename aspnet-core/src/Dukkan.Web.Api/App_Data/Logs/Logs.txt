@@ -1,0 +1,54 @@
+DEBUG 2020-05-26 23:49:16,394 [1    ] Abp.Modules.AbpModuleManager             - Loading Abp modules...
+DEBUG 2020-05-26 23:49:16,617 [1    ] Abp.Modules.AbpModuleManager             - Found 18 ABP modules in total.
+DEBUG 2020-05-26 23:49:16,633 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Dukkan.Web.DukkanWebHostModule, Dukkan.Web.Host, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,635 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Dukkan.Web.DukkanWebCoreModule, Dukkan.Web.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,635 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Dukkan.DukkanApplicationModule, Dukkan.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,636 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Dukkan.DukkanApplicationSharedModule, Dukkan.Application.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,636 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Dukkan.DukkanCoreSharedModule, Dukkan.Core.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,637 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Dukkan.DukkanCoreModule, Dukkan.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,637 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCoreModule, Abp.ZeroCore, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,637 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.AbpZeroCommonModule, Abp.Zero.Common, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,637 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AbpKernelModule, Abp, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,638 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AutoMapper.AbpAutoMapperModule, Abp.AutoMapper, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,638 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Dukkan.EntityFrameworkCore.DukkanEntityFrameworkModule, Dukkan.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,638 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Zero.EntityFrameworkCore.AbpZeroCoreEntityFrameworkCoreModule, Abp.ZeroCore.EntityFrameworkCore, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,638 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFrameworkCore.AbpEntityFrameworkCoreModule, Abp.EntityFrameworkCore, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,639 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.EntityFramework.AbpEntityFrameworkCommonModule, Abp.EntityFramework.Common, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,639 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.IdentityServer4.AbpZeroCoreIdentityServerEntityFrameworkCoreModule, Abp.ZeroCore.IdentityServer4.EntityFrameworkCore, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,639 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.IdentityServer4.AbpZeroCoreIdentityServerModule, Abp.ZeroCore.IdentityServer4, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,639 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.AspNetCore.AbpAspNetCoreModule, Abp.AspNetCore, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,639 [1    ] Abp.Modules.AbpModuleManager             - Loaded module: Abp.Web.AbpWebCommonModule, Abp.Web.Common, Version=5.6.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:16,642 [1    ] Abp.Modules.AbpModuleManager             - 18 modules loaded.
+DEBUG 2020-05-26 23:49:16,773 [1    ] o.Configuration.LanguageManagementConfig - Converted Abp (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-05-26 23:49:16,773 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpZero (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-05-26 23:49:16,773 [1    ] o.Configuration.LanguageManagementConfig - Converted Dukkan (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-05-26 23:49:16,773 [1    ] o.Configuration.LanguageManagementConfig - Converted AbpWeb (Abp.Localization.Dictionaries.DictionaryBasedLocalizationSource) to MultiTenantLocalizationSource
+DEBUG 2020-05-26 23:49:17,242 [1    ] ameworkCore.AbpEntityFrameworkCoreModule - Registering DbContext: Dukkan.EntityFrameworkCore.DukkanDbContext, Dukkan.EntityFrameworkCore, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+DEBUG 2020-05-26 23:49:18,474 [1    ] Abp.Localization.LocalizationManager     - Initializing 4 localization sources.
+DEBUG 2020-05-26 23:49:18,517 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Abp
+DEBUG 2020-05-26 23:49:18,527 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpZero
+DEBUG 2020-05-26 23:49:18,532 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: Dukkan
+DEBUG 2020-05-26 23:49:18,536 [1    ] Abp.Localization.LocalizationManager     - Initialized localization source: AbpWeb
+DEBUG 2020-05-26 23:49:18,837 [1    ] Abp.BackgroundJobs.BackgroundJobManager  - Start background worker: Castle.Proxies.BackgroundJobManagerProxy
+DEBUG 2020-05-26 23:49:19,024 [1    ] , Culture=neutral, PublicKeyToken=null]] - Start background worker: Abp.Authorization.Users.UserTokenExpirationWorker`2[[Dukkan.MultiTenancy.Tenant, Dukkan.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[Dukkan.Authorization.Users.User, Dukkan.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+DEBUG 2020-05-26 23:49:19,087 [1    ] Abp.AutoMapper.AbpAutoMapperModule       - Found 0 classes define auto mapping attributes
+INFO  2020-05-26 23:49:21,820 [1    ] tCore.Builder.RequestLocalizationOptions - Supported Request Localization Cultures: en,tr,ru,ar
+INFO  2020-05-26 23:49:22,202 [1    ] taProtection.KeyManagement.XmlKeyManager - User profile is available. Using 'C:\Users\ismail.yilmaz\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+INFO  2020-05-26 23:49:22,345 [5    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:21021/  
+INFO  2020-05-26 23:49:22,484 [5    ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Dukkan.Web.Controllers.HomeController.Index (Dukkan.Web.Host)'
+INFO  2020-05-26 23:49:27,331 [5    ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "Index", controller = "Home", area = ""}. Executing controller action with signature Microsoft.AspNetCore.Mvc.IActionResult Index() on controller Dukkan.Web.Controllers.HomeController (Dukkan.Web.Host).
+INFO  2020-05-26 23:49:27,574 [4    ] vc.Infrastructure.RedirectResultExecutor - Executing RedirectResult, redirecting to /swagger.
+INFO  2020-05-26 23:49:27,583 [4    ] c.Infrastructure.ControllerActionInvoker - Executed action Dukkan.Web.Controllers.HomeController.Index (Dukkan.Web.Host) in 244.5778ms
+INFO  2020-05-26 23:49:27,586 [4    ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Dukkan.Web.Controllers.HomeController.Index (Dukkan.Web.Host)'
+INFO  2020-05-26 23:49:27,605 [4    ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished in 5259.2911ms 302 
+INFO  2020-05-26 23:49:27,609 [13   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:21021/swagger/index.html  
+INFO  2020-05-26 23:49:27,686 [13   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished in 76.6368ms 200 text/html;charset=utf-8
+INFO  2020-05-26 23:49:28,143 [14   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:21021/AntiForgery/SetCookie  
+INFO  2020-05-26 23:49:28,150 [14   ] ft.AspNetCore.Routing.EndpointMiddleware - Executing endpoint 'Dukkan.Web.Controllers.AntiForgeryController.SetCookie (Dukkan.Web.Host)'
+INFO  2020-05-26 23:49:28,160 [14   ] c.Infrastructure.ControllerActionInvoker - Route matched with {action = "SetCookie", controller = "AntiForgery", area = ""}. Executing controller action with signature Void SetCookie() on controller Dukkan.Web.Controllers.AntiForgeryController (Dukkan.Web.Host).
+INFO  2020-05-26 23:49:28,187 [15   ] .Mvc.Infrastructure.ObjectResultExecutor - Executing ObjectResult, writing value of type 'Abp.Web.Models.AjaxResponse'.
+INFO  2020-05-26 23:49:28,205 [11   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request starting HTTP/1.1 GET http://localhost:21021/swagger/v1/swagger.json  
+INFO  2020-05-26 23:49:28,331 [15   ] c.Infrastructure.ControllerActionInvoker - Executed action Dukkan.Web.Controllers.AntiForgeryController.SetCookie (Dukkan.Web.Host) in 168.5502ms
+INFO  2020-05-26 23:49:28,334 [15   ] ft.AspNetCore.Routing.EndpointMiddleware - Executed endpoint 'Dukkan.Web.Controllers.AntiForgeryController.SetCookie (Dukkan.Web.Host)'
+INFO  2020-05-26 23:49:28,337 [15   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished in 194.5282ms 200 application/json; charset=utf-8
+INFO  2020-05-26 23:49:28,436 [11   ] Microsoft.AspNetCore.Hosting.Diagnostics - Request finished in 230.1645ms 200 application/json;charset=utf-8

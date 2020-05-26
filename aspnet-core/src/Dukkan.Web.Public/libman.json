@@ -1,0 +1,68 @@
+{
+  "defaultProvider": "cdnjs",
+  "version": "1.0",
+  "libraries": [
+    //core libs start
+    {
+      "library": "jquery@3.4.1",
+      "destination": "wwwroot/libs/jquery",
+      "files": [
+        "jquery.js",
+        "jquery.min.js",
+        "jquery.min.map"
+      ]
+    },
+    //core libs end
+
+    //abp libs start
+    {
+      "library": "abp-web-resources@4.1.0",
+      "provider": "jsdelivr",
+      "destination": "wwwroot/libs/abp-web-resources"
+    },
+    {
+      "library": "jquery.blockUI@2.70",
+      "destination": "wwwroot/libs/block-ui"
+    },
+    {
+      "library": "sweetalert@2.1.2",
+      "destination": "wwwroot/libs/sweetalert"
+    },
+    {
+      "library": "spin.js@2.3.2",
+      "destination": "wwwroot/libs/spin"
+    },
+    {
+      "library": "toastr.js@2.1.4",
+      "destination": "wwwroot/libs/toastr"
+    },
+    {
+      "library": "moment.js@2.24.0",
+      "destination": "wwwroot/libs/moment"
+    },
+    {
+      "library": "moment-timezone@0.5.23",
+      "destination": "wwwroot/libs/moment-timezone"
+    },
+    //abp libs end
+
+    //theme libs start
+
+    //theme libs end
+
+    //other libs start
+    {
+      "library": "jquery-validate@1.19.1",
+      "destination": "wwwroot/libs/jquery-validate"
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/libs/jquery-validate"
+    },
+    {
+      "library": "push.js@1.0.9",
+      "destination": "wwwroot/libs/push.js"
+    }
+    //other libs end
+  ]
+}
