@@ -1,6 +1,6 @@
-export interface IModelTranslation {
+export interface ITranslationModel {
   language: string;
 }
-export interface IMultiLingualModel<TTranslation extends IModelTranslation> {
+export interface IMultiLingualModel<TTranslation extends ITranslationModel> {
   translations: TTranslation[];
 }

@@ -17,10 +17,10 @@ namespace Dukkan.EntityFrameworkCore.Seed.Host
             var tenantId = DukkanConsts.MultiTenancyEnabled ? null : (int?)MultiTenancyConsts.DefaultTenantId;
             return new List<ApplicationLanguage>
             {
-                new ApplicationLanguage(tenantId, "en", "English", "famfamfam-flags gb"),
-                new ApplicationLanguage(tenantId, "tr", "Türkçe", "famfamfam-flags tr"),
-                new ApplicationLanguage(tenantId, "ar", "العربية", "famfamfam-flags sa"),
-                new ApplicationLanguage(tenantId, "ru", "Русский", "famfamfam-flags ru"),
+                new ApplicationLanguage(tenantId, "en", "English", "flag-icon flag-icon-us"),
+                new ApplicationLanguage(tenantId, "tr", "Türkçe", "flag-icon flag-icon-tr"),
+                new ApplicationLanguage(tenantId, "ar", "العربية", "flag-icon flag-icon-sa"),
+                new ApplicationLanguage(tenantId, "ru", "Русский", "flag-icon flag-icon-ru"),
             };
         }
 

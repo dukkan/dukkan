@@ -18,8 +18,8 @@
             "polyfills": "src/polyfills.ts",
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": [
-              "node_modules/famfamfam-flags/dist/sprite/famfamfam-flags.css",
-              "node_modules/sweetalert2/dist/sweetalert2.css",
+              "node_modules/flag-icon-css/css/flag-icon.min.css",
+              "node_modules/sweetalert2/dist/sweetalert2.min.css",
               "src/assets/freeze-ui/freeze-ui.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/primeicons/primeicons.css",
@@ -97,8 +97,8 @@
             "polyfills": "src/polyfills.ts",
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": [
-              "node_modules/famfamfam-flags/dist/sprite/famfamfam-flags.css",
-              "node_modules/sweetalert2/dist/sweetalert2.css",
+              "node_modules/flag-icon-css/css/flag-icon.min.css",
+              "node_modules/sweetalert2/dist/sweetalert2.min.css",
               "src/assets/freeze-ui/freeze-ui.css",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/primeicons/primeicons.css",

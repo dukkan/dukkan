@@ -9,7 +9,7 @@ import {
   CategoryServiceProxy,
   CategoryListDto,
 } from '@shared/service-proxies/service-proxies';
-import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+import { BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { CategoryAddOrEditModalComponent } from './category-add-or-edit-modal.component';
 
 @Component({
@@ -48,8 +48,8 @@ export class CategoriesComponent extends AppComponentBase {
       )
       .pipe(finalize(() => this.primengTableHelper.hideLoadingIndicator()))
       .subscribe((result) => {
-        this.primengTableHelper.totalRecordsCount = result.totalCount;
         this.primengTableHelper.records = result.items;
+        this.primengTableHelper.totalRecordsCount = result.totalCount;
         this.primengTableHelper.hideLoadingIndicator();
       });
   }

@@ -49,33 +49,30 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
     }
   }
 
-  prepareTranslationModels(editMode: boolean = false): void {
-    let translationModelConfigurer: (
-      translation: CategoryTranslationEditDto,
-      language: string
-    ) => CategoryTranslationEditDto = null;
-
-    if (editMode) {
-      translationModelConfigurer = (translation, language) => {
-        var existingTranslation = _.find(
-          this.editDto.translations,
-          (x) => x.language === language
-        );
-
-        if (existingTranslation) {
-          translation.name = existingTranslation.name;
-          translation.description = existingTranslation.description;
-        }
-
-        return translation;
-      };
+  prepareTranslationModels(editMode = false): void {
+    if (!editMode) {
+      this.editDto.translations = this._multiLingualModelService.prepareTranslationModels(
+        CategoryTranslationEditDto
+      );
     }
 
-    this.editDto.translations = _.map(
-      this._multiLingualModelService.prepareTranslationModels(
-        translationModelConfigurer
-      ),
-      (x) => new CategoryTranslationEditDto(x)
+    let translationConfigurer = (translation: CategoryTranslationEditDto) => {
+      var existingTranslation = _.find(
+        this.editDto.translations,
+        (x) => x.language === translation.language
+      );
+
+      if (existingTranslation) {
+        translation.name = existingTranslation.name;
+        translation.description = existingTranslation.description;
+      }
+
+      return translation;
+    };
+
+    this.editDto.translations = this._multiLingualModelService.prepareTranslationModels(
+      CategoryTranslationEditDto,
+      translationConfigurer
     );
   }
 

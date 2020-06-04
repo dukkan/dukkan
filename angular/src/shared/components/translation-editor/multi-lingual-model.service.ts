@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IModelTranslation } from './multi-lingual.models';
+import { ITranslationModel } from './multi-lingual.models';
 import * as _ from 'lodash';
 
 @Injectable()
@@ -11,35 +11,36 @@ export class MultiLingualModelService {
   }
 
   private bindLanguages(): void {
-    const currentLanguage = abp.localization.currentLanguage;
-    this.languages = [currentLanguage];
+    const defaultLanguage = _.find(
+      abp.localization.languages,
+      (x) => !x.isDisabled && x.isDefault
+    );
+    this.languages = [defaultLanguage];
 
     _.forEach(abp.localization.languages, (language) => {
-      if (!language.isDisabled && language.name !== currentLanguage.name) {
+      if (!language.isDisabled && language.name !== defaultLanguage.name) {
         this.languages.push(language);
       }
     });
   }
 
-  prepareTranslationModels<TTranslation extends IModelTranslation>(
-    configurer: (
-      translation: TTranslation,
-      language: string
-    ) => TTranslation = null
+  prepareTranslationModels<TTranslation extends ITranslationModel>(
+    translationType: { new (...args: any[]): TTranslation },
+    configurer: (translation: TTranslation) => TTranslation = null
   ): TTranslation[] {
-    const models: TTranslation[] = [];
-
-    // always null for default tranlation
-    const defaultModel = { language: null } as TTranslation;
-    if (configurer) configurer.call(this, defaultModel, defaultModel.language);
-    models.push(defaultModel);
+    const translations: TTranslation[] = [];
 
     _.forEach(this.languages, (language) => {
-      const model = { language: language.name } as TTranslation;
-      if (configurer) configurer.call(this, model, model.language);
-      models.push(model);
+      const translation = new translationType();
+      translation.language = language.name;
+
+      if (configurer) {
+        configurer.call(this, translation);
+      }
+
+      translations.push(translation);
     });
 
-    return models;
+    return translations;
   }
 }

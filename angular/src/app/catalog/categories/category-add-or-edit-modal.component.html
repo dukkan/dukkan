@@ -10,18 +10,20 @@
   ></abp-modal-header>
   <div class="modal-body">
     <multi-lingual-editor [translations]="editDto.translations">
-      <ng-container *multiLingualEditorDefault="let i = index">
-        <div class="form-group row required">
-          <label class="col-md-3 col-form-label" for="name">
+      <ng-container
+        *multiLingualEditorTranslation="let i = index; let default = first"
+      >
+        <div class="form-group row" [class.required]="default">
+          <label class="col-md-3 col-form-label" for="[{{ i }}].name">
             {{ "Name" | localize }}
           </label>
           <div class="col-md-9">
             <input
               type="text"
               class="form-control"
-              id="translations[{{ i }}].name"
-              name="translations[{{ i }}].name"
-              required
+              id="[{{ i }}].name"
+              name="[{{ i }}].name"
+              [required]="default"
               maxlength="32"
               [(ngModel)]="(editDto?.translations)[i].name"
               #nameModel="ngModel"
@@ -34,53 +36,15 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-md-3 col-form-label" for="description">
+          <label class="col-md-3 col-form-label" for="[{{ i }}].description">
             {{ "Description" | localize }}
           </label>
           <div class="col-md-9">
             <textarea
               type="text"
               class="form-control"
-              id="translations[{{ i }}].description"
-              name="translations[{{ i }}].description"
-              [(ngModel)]="(editDto?.translations)[i].description"
-              cols="5"
-            ></textarea>
-          </div>
-        </div>
-      </ng-container>
-      <ng-container *multiLingualEditorTranslations="let i = index">
-        <div class="form-group row">
-          <label class="col-md-3 col-form-label" for="name">
-            {{ "Name" | localize }}
-          </label>
-          <div class="col-md-9">
-            <input
-              type="text"
-              class="form-control"
-              id="translations[{{ i }}].name"
-              name="translations[{{ i }}].name"
-              maxlength="32"
-              [(ngModel)]="(editDto?.translations)[i].name"
-              #nameModel="ngModel"
-              #nameEl
-            />
-            <abp-validation-summary
-              [control]="nameModel"
-              [controlEl]="nameEl"
-            ></abp-validation-summary>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-md-3 col-form-label" for="description">
-            {{ "Description" | localize }}
-          </label>
-          <div class="col-md-9">
-            <textarea
-              type="text"
-              class="form-control"
-              id="translations[{{ i }}].description"
-              name="translations[{{ i }}].description"
+              id="[{{ i }}].description"
+              name="[{{ i }}].description"
               [(ngModel)]="(editDto?.translations)[i].description"
               cols="5"
             ></textarea>
@@ -117,7 +81,7 @@
       </div>
     </div>
     <div class="form-group row mb-0">
-      <label class="col-md-3 col-form-label">
+      <label class="col-md-3 col-form-label" for="isPublished">
         {{ "IsPublished" | localize }}
       </label>
       <div class="col-md-9">

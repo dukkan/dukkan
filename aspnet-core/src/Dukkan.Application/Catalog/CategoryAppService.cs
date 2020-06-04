@@ -1,16 +1,16 @@
 ﻿using System;
-using Abp.Application.Services.Dto;
-using Abp.Domain.Repositories;
-using Abp.Extensions;
-using Abp.Linq.Extensions;
-using Dukkan.Catalog.Dto;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using Abp.Runtime.Caching;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Abp.Application.Services.Dto;
+using Abp.Domain.Repositories;
+using Abp.Extensions;
+using Abp.Linq.Extensions;
+using Abp.Localization;
+using Dukkan.Catalog.Dto;
+using Microsoft.EntityFrameworkCore;
+using Z.EntityFramework.Plus;
 
 namespace Dukkan.Catalog
 {
@@ -18,17 +18,22 @@ namespace Dukkan.Catalog
     {
         private readonly IRepository<Category> _categoryRepository;
         private readonly ICategoryManager _categoryManager;
+        private readonly ILanguageManager _languageManager;
 
-        public CategoryAppService(IRepository<Category> categoryRepository, ICategoryManager categoryManager)
+        public CategoryAppService(IRepository<Category> categoryRepository,
+            ICategoryManager categoryManager,
+            ILanguageManager languageManager)
         {
             _categoryRepository = categoryRepository;
             _categoryManager = categoryManager;
+            _languageManager = languageManager;
         }
 
         private IQueryable<Category> CreateCategoryQuery(bool includeTranslations = true)
         {
             var query = _categoryRepository.GetAll();
-            if (includeTranslations)
+
+            if (includeTranslations) 
                 query = query.Include(x => x.Translations);
 
             return query;
@@ -40,8 +45,8 @@ namespace Dukkan.Catalog
                 return query;
 
             query = query.WhereIf(!input.MasterFilter.IsNullOrEmpty(),
-                x => x.Translations.Any(y => y.Name.Contains(input.MasterFilter)
-                || y.Description.Contains(input.MasterFilter)));
+                x => x.Translations.Any(y => y.Name.Contains(input.MasterFilter) ||
+                   y.Description.Contains(input.MasterFilter)));
 
             return query;
         }
@@ -54,7 +59,7 @@ namespace Dukkan.Catalog
                 var categoryModel = ObjectMapper.Map<CategoryListDto>(category);
 
                 //fill in additional values (not existing in the entity)
-                categoryModel.Breadcrumb = _categoryManager.GetFormattedBreadCrumb(category);
+                categoryModel.Breadcrumb = _categoryManager.GetFormattedBreadCrumb(category, language: _languageManager.CurrentLanguage.Name);
 
                 return categoryModel;
             }).ToList();
@@ -118,6 +123,7 @@ namespace Dukkan.Catalog
                 .OrderBy(c => c.ParentCategoryId)
                 .ThenBy(c => c.DisplayOrder)
                 .ThenBy(c => c.Id);
+
             var filteredQuery = ApplyCategoryFilter(query, input);
 
             var totalCount = await filteredQuery.CountAsync();
@@ -132,9 +138,9 @@ namespace Dukkan.Catalog
             var dtos = ConvertToCategoryListDtos(sortedCategories);
 
             return new PagedResultDto<CategoryListDto>(
-                 totalCount,
-                 dtos
-             );
+                totalCount,
+                dtos
+            );
         }
 
         public async Task<CategoryEditDto> GetForEditAsync(EntityDto input)
@@ -161,7 +167,6 @@ namespace Dukkan.Catalog
         {
             await _categoryRepository.DeleteAsync(input.Id);
         }
-
 
         //public List<ComboboxItemDto> GetCategoryList(bool showHidden = false)
         //{

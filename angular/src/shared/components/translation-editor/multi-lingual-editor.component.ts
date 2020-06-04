@@ -7,20 +7,12 @@ import {
 } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import * as _ from 'lodash';
-import { IModelTranslation } from './multi-lingual.models';
+import { ITranslationModel } from './multi-lingual.models';
 
 @Directive({
-  selector: '[multiLingualEditorDefault]',
+  selector: '[multiLingualEditorTranslation]',
 })
-export class MultiLingualEditorDefaultDirective {
-  public readonly defaultIndex = 0;
-  constructor(public template: TemplateRef<any>) {}
-}
-
-@Directive({
-  selector: '[multiLingualEditorTranslations]',
-})
-export class MultiLingualEditorTranslationsDirective {
+export class MultiLingualEditorTranslationDirective {
   constructor(public template: TemplateRef<any>) {}
 }
 
@@ -30,13 +22,10 @@ export class MultiLingualEditorTranslationsDirective {
   viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
 export class MultiLingualEditorComponent {
-  @ContentChild(MultiLingualEditorDefaultDirective, { static: false })
-  defaultDirective: MultiLingualEditorDefaultDirective;
+  @ContentChild(MultiLingualEditorTranslationDirective, { static: false })
+  translationDirective: MultiLingualEditorTranslationDirective;
 
-  @ContentChild(MultiLingualEditorTranslationsDirective, { static: false })
-  translationsDirective: MultiLingualEditorTranslationsDirective;
-
-  @Input() translations: IModelTranslation[];
+  @Input() translations: ITranslationModel[];
 
   languageByNameMap: { [key: string]: abp.localization.ILanguageInfo } = {};
 

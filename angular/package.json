@@ -28,6 +28,7 @@
     "admin-lte-css-only": "^3.0.4",
     "core-js": "^3.2.1",
     "famfamfam-flags": "^1.0.0",
+    "flag-icon-css": "^3.4.6",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "moment-timezone": "^0.5.13",
