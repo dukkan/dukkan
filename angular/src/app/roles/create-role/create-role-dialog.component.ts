@@ -22,6 +22,7 @@ import {
 })
 export class CreateRoleDialogComponent extends AppComponentBase
   implements OnInit {
+  active = false;
   saving = false;
   role = new RoleDto();
   permissions: PermissionDto[] = [];
@@ -39,6 +40,8 @@ export class CreateRoleDialogComponent extends AppComponentBase
   }
 
   ngOnInit(): void {
+    this.active = true;
+
     this._roleService
       .getAllPermissions()
       .subscribe((result: ListResultDtoOfPermissionDto) => {
@@ -90,9 +93,14 @@ export class CreateRoleDialogComponent extends AppComponentBase
         })
       )
       .subscribe(() => {
+        this.close();
         this.notify.info(this.l('SavedSuccessfully'));
-        this.bsModalRef.hide();
         this.onSave.emit();
       });
+  }
+
+  close(): void {
+    this.active = false;
+    this.bsModalRef.hide();
   }
 }

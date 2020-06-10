@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Dukkan.Web.Host": {
+    "Dukkan.Web.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "http://localhost:21021",

@@ -14,7 +14,7 @@ import {
   CategoryTranslationEditDto,
 } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash';
-import { MultiLingualModelService } from '@shared/components/translation-editor/multi-lingual-model.service';
+import { MultiLingualModelService } from '@shared/components/multi-lingual-editor/multi-lingual-model.service';
 
 @Component({
   templateUrl: 'category-add-or-edit-modal.component.html',
@@ -57,7 +57,7 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
     }
 
     let translationConfigurer = (translation: CategoryTranslationEditDto) => {
-      var existingTranslation = _.find(
+      const existingTranslation = _.find(
         this.editDto.translations,
         (x) => x.language === translation.language
       );

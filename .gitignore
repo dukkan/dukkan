@@ -4,6 +4,6 @@
 .vs/
 obj/
 bin/
-aspnet-core/src/Dukkan.Web.Host/App_Data/Logs/
-aspnet-core/src/Dukkan.Web.Mvc/App_Data/Logs/
-aspnet-core/src/Dukkan.Migrator/Logs/Logs.txt
+aspnet-core/src/Dukkan.Web.Api/App_Data/Logs/
+aspnet-core/src/Dukkan.Web.Public/App_Data/Logs/
+aspnet-core/src/Dukkan.EntityFrameworkCore.Migrator/Logs/Logs.txt

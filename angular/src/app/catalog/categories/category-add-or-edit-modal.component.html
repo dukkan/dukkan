@@ -11,9 +11,13 @@
   <div class="modal-body">
     <multi-lingual-editor [translations]="editDto.translations">
       <ng-container
-        *multiLingualEditorTranslation="let i = index; let default = first"
+        *multiLingualEditorTranslation="
+          let i = index;
+          let current = isCurrent;
+          let default = isDefault
+        "
       >
-        <div class="form-group row" [class.required]="default">
+        <div class="form-group row" [class.required]="current || default">
           <label class="col-md-3 col-form-label" for="[{{ i }}].name">
             {{ "Name" | localize }}
           </label>
@@ -23,7 +27,7 @@
               class="form-control"
               id="[{{ i }}].name"
               name="[{{ i }}].name"
-              [required]="default"
+              [required]="current || default"
               maxlength="32"
               [(ngModel)]="(editDto?.translations)[i].name"
               #nameModel="ngModel"

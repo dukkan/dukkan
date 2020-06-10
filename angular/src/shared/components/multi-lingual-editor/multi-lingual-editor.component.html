@@ -1,0 +1,47 @@
+<ng-container *ngIf="translations?.length == 1; else multiLanguageTpl">
+  <ng-container
+    *ngTemplateOutlet="
+      translationDirective.template;
+      context: {
+        index: 0,
+        isCurrent: true
+      }
+    "
+  ></ng-container>
+</ng-container>
+
+<ng-template #multiLanguageTpl>
+  <tabset *ngIf="translations?.length > 1">
+    <ng-container *ngFor="let translation of translations; let i = index">
+      <tab class="pt-3 px-2">
+        <ng-template tabHeading>
+          <i [ngClass]="languageByNameMap[translation.language].icon"></i>
+          {{ languageByNameMap[translation.language].displayName }}
+          <span
+            *ngIf="currentLanguage.name == translation.language"
+            class="badge bg-primary"
+            [class.mr-1]="currentLanguage.name == defaultLanguage.name"
+          >
+            {{ "Current" | localize }}
+          </span>
+          <span
+            *ngIf="defaultLanguage.name == translation.language"
+            class="badge bg-primary"
+          >
+            {{ "Default" | localize }}
+          </span>
+        </ng-template>
+        <ng-container
+          *ngTemplateOutlet="
+            translationDirective.template;
+            context: {
+              index: i,
+              isCurrent: currentLanguage.name == translation.language,
+              isDefault: defaultLanguage.name == translation.language
+            }
+          "
+        ></ng-container>
+      </tab>
+    </ng-container>
+  </tabset>
+</ng-template>

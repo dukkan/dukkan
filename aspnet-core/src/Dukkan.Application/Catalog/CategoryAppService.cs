@@ -72,7 +72,7 @@ namespace Dukkan.Catalog
 
             foreach (var editDto in editDtos)
             {
-                var translation = category.Translations?.FirstOrDefault(x => x.Language == editDto.Language);
+                var translation = category.Translations.FirstOrDefault(x => x.Language == editDto.Language);
                 if (translation != null)
                 {
                     if (!editDto.IsDirty())
@@ -93,7 +93,7 @@ namespace Dukkan.Catalog
 
                     //insert
                     translation = ObjectMapper.Map<CategoryTranslation>(editDto);
-                    category.Translations?.Add(translation);
+                    category.Translations.Add(translation);
                 }
             }
         }

@@ -22,8 +22,8 @@ import { EqualValidator } from './directives/equal-validator.directive';
 import {
   MultiLingualEditorComponent,
   MultiLingualEditorTranslationDirective,
-} from './components/translation-editor/multi-lingual-editor.component';
-import { MultiLingualModelService } from './components/translation-editor/multi-lingual-model.service';
+} from './components/multi-lingual-editor/multi-lingual-editor.component';
+import { MultiLingualModelService } from './components/multi-lingual-editor/multi-lingual-model.service';
 
 @NgModule({
   imports: [

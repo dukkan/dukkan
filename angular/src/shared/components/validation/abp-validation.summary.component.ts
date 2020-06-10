@@ -4,7 +4,7 @@ import {
   Injector,
   Renderer2,
   ElementRef,
-  OnInit
+  OnInit,
 } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { AppComponentBase } from '@shared/app-component-base';
@@ -12,7 +12,7 @@ import { AbpValidationError } from './abp-validation.api';
 
 @Component({
   selector: 'abp-validation-summary',
-  templateUrl: './abp-validation.summary.component.html'
+  templateUrl: './abp-validation.summary.component.html',
 })
 export class AbpValidationSummaryComponent extends AppComponentBase
   implements OnInit {
@@ -67,8 +67,9 @@ export class AbpValidationSummaryComponent extends AppComponentBase
     if (this.controlEl) {
       this.control.valueChanges.subscribe(() => {
         if (
-          this.control.valid &&
-          (this.control.dirty || this.control.touched)
+          (this.control.valid &&
+            (this.control.dirty || this.control.touched)) ||
+          this.control.disabled
         ) {
           this._renderer.removeClass(this.controlEl, 'is-invalid');
         }

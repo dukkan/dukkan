@@ -25,7 +25,7 @@ namespace Dukkan.Web
                 directoryInfo = directoryInfo.Parent ?? throw new Exception("Could not find content root folder!");
             }
 
-            var webPublicFolder = Path.Combine(directoryInfo.FullName, "src", "Dukkan.Web.Mvc");
+            var webPublicFolder = Path.Combine(directoryInfo.FullName, "src", "Dukkan.Web.Public");
             if (Directory.Exists(webPublicFolder))
             {
                 return webPublicFolder;
