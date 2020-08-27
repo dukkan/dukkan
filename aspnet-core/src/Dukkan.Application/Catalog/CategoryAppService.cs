@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
@@ -9,8 +8,8 @@ using Abp.Extensions;
 using Abp.Linq.Extensions;
 using Abp.Localization;
 using Dukkan.Catalog.Dto;
+using Dukkan.ObjectMapping;
 using Microsoft.EntityFrameworkCore;
-using Z.EntityFramework.Plus;
 
 namespace Dukkan.Catalog
 {
@@ -33,7 +32,7 @@ namespace Dukkan.Catalog
         {
             var query = _categoryRepository.GetAll();
 
-            if (includeTranslations) 
+            if (includeTranslations)
                 query = query.Include(x => x.Translations);
 
             return query;
@@ -46,7 +45,7 @@ namespace Dukkan.Catalog
 
             query = query.WhereIf(!input.MasterFilter.IsNullOrEmpty(),
                 x => x.Translations.Any(y => y.Name.Contains(input.MasterFilter) ||
-                   y.Description.Contains(input.MasterFilter)));
+                                             y.Description.Contains(input.MasterFilter)));
 
             return query;
         }
@@ -65,44 +64,11 @@ namespace Dukkan.Catalog
             }).ToList();
         }
 
-        private void TranslateCategory(IEnumerable<CategoryTranslationEditDto> editDtos, Category category)
-        {
-            if (category == null)
-                throw new ArgumentNullException(nameof(category));
-
-            foreach (var editDto in editDtos)
-            {
-                var translation = category.Translations.FirstOrDefault(x => x.Language == editDto.Language);
-                if (translation != null)
-                {
-                    if (!editDto.IsDirty())
-                    {
-                        //delete
-                        category.Translations.Remove(translation);
-                    }
-                    else
-                    {
-                        //update
-                        ObjectMapper.Map(editDto, translation);
-                    }
-                }
-                else
-                {
-                    if (!editDto.IsDirty())
-                        continue;
-
-                    //insert
-                    translation = ObjectMapper.Map<CategoryTranslation>(editDto);
-                    category.Translations.Add(translation);
-                }
-            }
-        }
-
         private async Task AddCategoryAsync(CategoryEditDto input)
         {
             var entity = ObjectMapper.Map<Category>(input);
 
-            TranslateCategory(input.Translations, entity);
+            ObjectMapper.MapMultiLingualEntityTranslations(input.Translations, entity);
 
             await _categoryRepository.InsertAsync(entity);
         }
@@ -114,7 +80,7 @@ namespace Dukkan.Catalog
 
             ObjectMapper.Map(input, entity);
 
-            TranslateCategory(input.Translations, entity);
+            ObjectMapper.MapMultiLingualEntityTranslations(input.Translations, entity);
         }
 
         public async Task<PagedResultDto<CategoryListDto>> GetAllPagedAsync(CategoryGetAllPagedInput input)
@@ -141,6 +107,22 @@ namespace Dukkan.Catalog
                 totalCount,
                 dtos
             );
+        }
+
+        public async Task<ListResultDto<CategoryListDto>> GetAllAsync()
+        {
+            var query = CreateCategoryQuery()
+                .OrderBy(c => c.ParentCategoryId)
+                .ThenBy(c => c.DisplayOrder)
+                .ThenBy(c => c.Id);
+
+            var unsortedEntities = await query.ToListAsync();
+
+            var sortedCategories = _categoryManager.SortCategoriesForTree(unsortedEntities);
+
+            var dtos = ConvertToCategoryListDtos(sortedCategories);
+
+            return new ListResultDto<CategoryListDto>(dtos);
         }
 
         public async Task<CategoryEditDto> GetForEditAsync(EntityDto input)

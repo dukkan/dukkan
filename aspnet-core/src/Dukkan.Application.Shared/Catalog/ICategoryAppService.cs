@@ -9,6 +9,8 @@ namespace Dukkan.Catalog
     {
         Task<PagedResultDto<CategoryListDto>> GetAllPagedAsync(CategoryGetAllPagedInput input);
 
+        Task<ListResultDto<CategoryListDto>> GetAllAsync();
+
         Task<CategoryEditDto> GetForEditAsync(EntityDto input);
 
         Task AddOrEditAsync(CategoryEditDto input);

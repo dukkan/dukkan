@@ -12,6 +12,7 @@ import {
   CategoryServiceProxy,
   CategoryEditDto,
   CategoryTranslationEditDto,
+  CategoryListDto,
 } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash';
 import { MultiLingualModelService } from '@shared/components/multi-lingual-editor/multi-lingual-model.service';
@@ -24,6 +25,7 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
   id: number;
   saving = false;
   editDto = new CategoryEditDto();
+  allCategories: CategoryListDto[];
 
   @Output() onSave = new EventEmitter<any>();
 
@@ -37,6 +39,8 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
   }
 
   ngOnInit(): void {
+    this.prepareParentCategories();
+
     if (this.id) {
       this._categoryService
         .getForEdit(this.id)
@@ -91,5 +95,12 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
         this.bsModalRef.hide();
         this.onSave.emit();
       });
+  }
+
+  prepareParentCategories(): void {
+    this._categoryService.getAll().subscribe((result) => {
+      this.allCategories = result.items;
+      this.editDto.parentCategoryId = this.allCategories[0].id;
+    });
   }
 }

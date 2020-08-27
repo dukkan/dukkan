@@ -219,6 +219,57 @@ export class CategoryServiceProxy {
     }
 
     /**
+     * @return Success
+     */
+    getAll(): Observable<ListResultDtoOfCategoryListDto> {
+        let url_ = this.baseUrl + "/api/services/app/Category/GetAll";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetAll(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetAll(<any>response_);
+                } catch (e) {
+                    return <Observable<ListResultDtoOfCategoryListDto>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<ListResultDtoOfCategoryListDto>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetAll(response: HttpResponseBase): Observable<ListResultDtoOfCategoryListDto> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = ListResultDtoOfCategoryListDto.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<ListResultDtoOfCategoryListDto>(<any>null);
+    }
+
+    /**
      * @param id (optional) 
      * @return Success
      */
@@ -2101,6 +2152,57 @@ export class PagedResultDtoOfCategoryListDto implements IPagedResultDtoOfCategor
 
 export interface IPagedResultDtoOfCategoryListDto {
     totalCount: number;
+    items: CategoryListDto[] | undefined;
+}
+
+export class ListResultDtoOfCategoryListDto implements IListResultDtoOfCategoryListDto {
+    items: CategoryListDto[] | undefined;
+
+    constructor(data?: IListResultDtoOfCategoryListDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["items"])) {
+                this.items = [] as any;
+                for (let item of _data["items"])
+                    this.items.push(CategoryListDto.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): ListResultDtoOfCategoryListDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ListResultDtoOfCategoryListDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.items)) {
+            data["items"] = [];
+            for (let item of this.items)
+                data["items"].push(item.toJSON());
+        }
+        return data; 
+    }
+
+    clone(): ListResultDtoOfCategoryListDto {
+        const json = this.toJSON();
+        let result = new ListResultDtoOfCategoryListDto();
+        result.init(json);
+        return result;
+    }
+}
+
+export interface IListResultDtoOfCategoryListDto {
     items: CategoryListDto[] | undefined;
 }
 

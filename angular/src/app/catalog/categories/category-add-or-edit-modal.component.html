@@ -56,18 +56,21 @@
         </div>
       </ng-container>
     </multi-lingual-editor>
-    <div class="form-group row">
+    <div *ngIf="allCategories?.length > 0" class="form-group row">
       <label class="col-md-3 col-form-label" for="parentCategoryId">
         {{ "ParentCategory" | localize }}
       </label>
       <div class="col-md-9">
-        <input
-          type="number"
+        <select
           class="form-control"
           name="parentCategoryId"
           id="parentCategoryId"
           [(ngModel)]="editDto.parentCategoryId"
-        />
+        >
+          <option *ngFor="let item of allCategories" [value]="item.id">
+            {{ item.breadcrumb }}
+          </option>
+        </select>
       </div>
     </div>
     <div class="form-group row">
