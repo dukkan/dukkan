@@ -58,7 +58,7 @@ namespace Dukkan.Catalog
                 var categoryModel = ObjectMapper.Map<CategoryListDto>(category);
 
                 //fill in additional values (not existing in the entity)
-                categoryModel.Breadcrumb = _categoryManager.GetFormattedBreadCrumb(category, language: _languageManager.CurrentLanguage.Name);
+                categoryModel.Breadcrumb = _categoryManager.GetFormattedBreadCrumb(category);
 
                 return categoryModel;
             }).ToList();
@@ -149,28 +149,5 @@ namespace Dukkan.Catalog
         {
             await _categoryRepository.DeleteAsync(input.Id);
         }
-
-        //public List<ComboboxItemDto> GetCategoryList(bool showHidden = false)
-        //{
-        //    var categories = GetAllCategories(showHidden: showHidden);
-        //    var listItems = categories.Select(c => new ComboboxItemDto
-        //    {
-        //        DisplayText = _categoryManager.GetFormattedBreadCrumb(c, categories),
-        //        Value = c.Id.ToString()
-        //    });
-
-        //    var result = new List<ComboboxItemDto>();
-        //    //clone the list to ensure that "selected" property is not set
-        //    foreach (var item in listItems)
-        //    {
-        //        result.Add(new ComboboxItemDto
-        //        {
-        //            DisplayText = item.Text,
-        //            Value = item.Value
-        //        });
-        //    }
-
-        //    return result;
-        //}
     }
 }
