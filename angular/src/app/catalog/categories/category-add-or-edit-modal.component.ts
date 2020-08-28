@@ -15,12 +15,13 @@ import {
   CategoryListDto,
 } from '@shared/service-proxies/service-proxies';
 import * as _ from 'lodash';
-import { MultiLingualModelService } from '@shared/components/multi-lingual-editor/multi-lingual-model.service';
+import { MultiLingualEditorService } from '@shared/components/multi-lingual-editor/multi-lingual-editor.service';
 
 @Component({
   templateUrl: 'category-add-or-edit-modal.component.html',
 })
-export class CategoryAddOrEditModalComponent extends AppComponentBase
+export class CategoryAddOrEditModalComponent
+  extends AppComponentBase
   implements OnInit {
   id: number;
   saving = false;
@@ -33,7 +34,7 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
     injector: Injector,
     public bsModalRef: BsModalRef,
     private _categoryService: CategoryServiceProxy,
-    private _multiLingualModelService: MultiLingualModelService
+    private _multiLingualEditorService: MultiLingualEditorService
   ) {
     super(injector);
   }
@@ -46,18 +47,27 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
         .getForEdit(this.id)
         .subscribe((result: CategoryEditDto) => {
           this.editDto = result;
-          this.prepareTranslationModels(true);
+          this.prepareTranslationModels();
         });
     } else {
       this.prepareTranslationModels();
     }
   }
 
-  prepareTranslationModels(editMode = false): void {
-    if (!editMode) {
-      this.editDto.translations = this._multiLingualModelService.prepareTranslationModels(
+  prepareParentCategories(): void {
+    this._categoryService.getAll().subscribe((result) => {
+      this.allCategories = result.items;
+      this.editDto.parentCategoryId = this.allCategories[0].id;
+    });
+  }
+
+  prepareTranslationModels(): void {
+    if (!this.editDto.id) {
+      this.editDto.translations = this._multiLingualEditorService.prepareTranslationModels(
         CategoryTranslationEditDto
       );
+
+      return;
     }
 
     let translationConfigurer = (translation: CategoryTranslationEditDto) => {
@@ -74,7 +84,7 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
       return translation;
     };
 
-    this.editDto.translations = this._multiLingualModelService.prepareTranslationModels(
+    this.editDto.translations = this._multiLingualEditorService.prepareTranslationModels(
       CategoryTranslationEditDto,
       translationConfigurer
     );
@@ -95,12 +105,5 @@ export class CategoryAddOrEditModalComponent extends AppComponentBase
         this.bsModalRef.hide();
         this.onSave.emit();
       });
-  }
-
-  prepareParentCategories(): void {
-    this._categoryService.getAll().subscribe((result) => {
-      this.allCategories = result.items;
-      this.editDto.parentCategoryId = this.allCategories[0].id;
-    });
   }
 }

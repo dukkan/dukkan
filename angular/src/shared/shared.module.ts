@@ -19,11 +19,9 @@ import { LayoutStoreService } from './layout/layout-store.service';
 
 import { BusyDirective } from './directives/busy.directive';
 import { EqualValidator } from './directives/equal-validator.directive';
-import {
-  MultiLingualEditorComponent,
-  MultiLingualEditorTranslationDirective,
-} from './components/multi-lingual-editor/multi-lingual-editor.component';
-import { MultiLingualModelService } from './components/multi-lingual-editor/multi-lingual-model.service';
+import { MultiLingualEditorComponent } from './components/multi-lingual-editor/multi-lingual-editor.component';
+import { MultiLingualEditorTranslationDirective } from './components/multi-lingual-editor/multi-lingual-editor-translation.directive';
+import { MultiLingualEditorService } from './components/multi-lingual-editor/multi-lingual-editor.service';
 
 @NgModule({
   imports: [
@@ -66,7 +64,7 @@ export class SharedModule {
         AppAuthService,
         AppRouteGuard,
         LayoutStoreService,
-        MultiLingualModelService,
+        MultiLingualEditorService,
       ],
     };
   }

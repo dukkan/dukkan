@@ -15,8 +15,8 @@
     <ng-container *ngFor="let translation of translations; let i = index">
       <tab class="pt-3 px-2">
         <ng-template tabHeading>
-          <i [ngClass]="languageByNameMap[translation.language].icon"></i>
-          {{ languageByNameMap[translation.language].displayName }}
+          <i [ngClass]="languagesByName[translation.language].icon"></i>
+          {{ languagesByName[translation.language].displayName }}
           <span
             *ngIf="currentLanguage.name == translation.language"
             class="badge bg-primary"

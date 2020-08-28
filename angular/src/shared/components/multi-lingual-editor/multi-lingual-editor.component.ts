@@ -1,22 +1,9 @@
-import {
-  Component,
-  ContentChild,
-  Input,
-  Directive,
-  TemplateRef,
-  OnInit,
-} from '@angular/core';
+import { Component, ContentChild, Input, OnInit } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import * as _ from 'lodash';
-import { IModelTranslation } from './multi-lingual.models';
-import { MultiLingualModelService } from './multi-lingual-model.service';
-
-@Directive({
-  selector: '[multiLingualEditorTranslation]',
-})
-export class MultiLingualEditorTranslationDirective {
-  constructor(public template: TemplateRef<any>) {}
-}
+import { IModelTranslation } from './multi-lingual.model';
+import { MultiLingualEditorService } from './multi-lingual-editor.service';
+import { MultiLingualEditorTranslationDirective } from './multi-lingual-editor-translation.directive';
 
 @Component({
   selector: 'multi-lingual-editor',
@@ -29,14 +16,12 @@ export class MultiLingualEditorComponent implements OnInit {
 
   @Input() translations: IModelTranslation[];
 
-  languages = this._multiLingualModelService.getSortedLanguages();
-  defaultLanguage = this._multiLingualModelService.getDefaultLanguage(
-    this.languages
-  );
+  languages: abp.localization.ILanguageInfo[] = this._multiLingualEditorService.getAllLanguages();
   currentLanguage = abp.localization.currentLanguage;
-  languageByNameMap: { [key: string]: abp.localization.ILanguageInfo } = {};
+  defaultLanguage: abp.localization.ILanguageInfo = this._multiLingualEditorService.getDefaultLanguage();
+  languagesByName: { [key: string]: abp.localization.ILanguageInfo } = {};
 
-  constructor(private _multiLingualModelService: MultiLingualModelService) {}
+  constructor(private _multiLingualEditorService: MultiLingualEditorService) {}
 
   ngOnInit(): void {
     this.bindLanguageByNameMap();
@@ -44,7 +29,7 @@ export class MultiLingualEditorComponent implements OnInit {
 
   private bindLanguageByNameMap(): void {
     _.forEach(this.languages, (language) => {
-      this.languageByNameMap[language.name] = language;
+      this.languagesByName[language.name] = language;
     });
   }
 }
