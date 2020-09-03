@@ -6,7 +6,6 @@ using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
 using Abp.Linq.Extensions;
-using Abp.Localization;
 using Dukkan.Catalog.Dto;
 using Dukkan.ObjectMapping;
 using Microsoft.EntityFrameworkCore;
@@ -17,15 +16,12 @@ namespace Dukkan.Catalog
     {
         private readonly IRepository<Category> _categoryRepository;
         private readonly ICategoryManager _categoryManager;
-        private readonly ILanguageManager _languageManager;
 
         public CategoryAppService(IRepository<Category> categoryRepository,
-            ICategoryManager categoryManager,
-            ILanguageManager languageManager)
+            ICategoryManager categoryManager)
         {
             _categoryRepository = categoryRepository;
             _categoryManager = categoryManager;
-            _languageManager = languageManager;
         }
 
         private IQueryable<Category> CreateCategoryQuery(bool includeTranslations = true)
@@ -52,15 +48,12 @@ namespace Dukkan.Catalog
 
         private List<CategoryListDto> ConvertToCategoryListDtos(IEnumerable<Category> entities)
         {
-            return entities.Select(category =>
+            return entities.Select(entity =>
             {
-                //fill in model values from the entity
-                var categoryModel = ObjectMapper.Map<CategoryListDto>(category);
+                var dto = ObjectMapper.Map<CategoryListDto>(entity);
+                dto.Breadcrumb = _categoryManager.GetFormattedBreadCrumb(entity);
 
-                //fill in additional values (not existing in the entity)
-                categoryModel.Breadcrumb = _categoryManager.GetFormattedBreadCrumb(category);
-
-                return categoryModel;
+                return dto;
             }).ToList();
         }
 
@@ -99,9 +92,9 @@ namespace Dukkan.Catalog
                 .PageBy(input)
                 .ToListAsync();
 
-            var sortedCategories = _categoryManager.SortCategoriesForTree(unsortedEntities);
+            var sortedEntities = _categoryManager.SortCategoriesForTree(unsortedEntities);
 
-            var dtos = ConvertToCategoryListDtos(sortedCategories);
+            var dtos = ConvertToCategoryListDtos(sortedEntities);
 
             return new PagedResultDto<CategoryListDto>(
                 totalCount,
@@ -118,17 +111,16 @@ namespace Dukkan.Catalog
 
             var unsortedEntities = await query.ToListAsync();
 
-            var sortedCategories = _categoryManager.SortCategoriesForTree(unsortedEntities);
+            var sortedEntities = _categoryManager.SortCategoriesForTree(unsortedEntities);
 
-            var dtos = ConvertToCategoryListDtos(sortedCategories);
+            var dtos = ConvertToCategoryListDtos(sortedEntities);
 
             return new ListResultDto<CategoryListDto>(dtos);
         }
 
         public async Task<CategoryEditDto> GetForEditAsync(EntityDto input)
         {
-            var entity = await _categoryRepository.GetAllIncluding(x => x.Translations)
-                .FirstOrDefaultAsync(x => x.Id == input.Id);
+            var entity = await CreateCategoryQuery().FirstOrDefaultAsync(x => x.Id == input.Id);
 
             return ObjectMapper.Map<CategoryEditDto>(entity);
         }

@@ -105,5 +105,6 @@
     <text name="RoleDeleteWarningMessage">Role {0} will be deleted and unassigned from all assigned users.</text>
     <text name="TenantDeleteWarningMessage">Tenant {0} will be deleted.</text>
     <text name="SearchWithThreeDot">Search...</text>
+    <text name="Undefined">Undefined</text>
   </texts>
 </localizationDictionary>

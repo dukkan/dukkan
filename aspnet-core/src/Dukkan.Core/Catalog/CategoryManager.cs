@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using Abp.Domain.Repositories;
 using Abp.Extensions;
-using Abp.Localization;
+using Dukkan.Domain.Entities;
 
 namespace Dukkan.Catalog
 {
@@ -12,41 +11,9 @@ namespace Dukkan.Catalog
     {
         private readonly IRepository<Category> _categoryRepository;
 
-
         public CategoryManager(IRepository<Category> categoryRepository)
         {
             _categoryRepository = categoryRepository;
-        }
-
-        private CategoryTranslation GetCategoryTranslation(Category category, string language = null)
-        {
-            var translation = category.Translations.FirstOrDefault(x => x.Language == language);
-            if (translation != null)
-            {
-                return translation;
-            }
-
-            translation = category.Translations.FirstOrDefault(x => x.Language == CultureInfo.CurrentUICulture.Name);
-            if (translation != null)
-            {
-                return translation;
-            }
-
-            var defaultLanguage = SettingManager.GetSettingValueForApplication(LocalizationSettingNames.DefaultLanguage);
-
-            translation = category.Translations.FirstOrDefault(pt => pt.Language == defaultLanguage);
-            if (translation != null)
-            {
-                return translation;
-            }
-
-            translation = category.Translations.FirstOrDefault();
-            if (translation != null)
-            {
-                return translation;
-            }
-
-            throw new Exception("No translation found");
         }
 
         public IList<Category> SortCategoriesForTree(IList<Category> source, int parentId = 0,
@@ -66,7 +33,7 @@ namespace Dukkan.Catalog
             if (ignoreCategoriesWithoutExistingParent || result.Count == source.Count)
                 return result;
 
-            //find categories without parent in provided category category and insert them into result
+            //find categories without parent in provided entity entity and insert them into result
             foreach (var cat in source)
                 if (result.FirstOrDefault(x => x.Id == cat.Id) == null)
                     result.Add(cat);
@@ -82,8 +49,8 @@ namespace Dukkan.Catalog
             var breadcrumb = GetCategoryBreadCrumb(category, allCategories, true);
             for (var i = 0; i <= breadcrumb.Count - 1; i++)
             {
-                var translation = GetCategoryTranslation(breadcrumb[i], language);
-                result = result.IsNullOrEmpty() ? translation.Name : $"{result} {separator} {translation.Name}";
+                var name = breadcrumb[i].GetTranslationOrNull(language)?.Name ?? L("Undefined");
+                result = result.IsNullOrEmpty() ? name : $"{result} {separator} {name}";
             }
 
             return result;
