@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Abp;
 using Abp.Domain.Entities;
 using Abp.ObjectMapping;
@@ -10,23 +9,24 @@ namespace Dukkan.ObjectMapping
     public static class DukkanObjectMapperExtensions
     {
         public static void MapMultiLingualEntityTranslations<TTranslation, TTranslationDto>(this IObjectMapper mapper,
-            ICollection<TTranslationDto> translationDtos,
-            IMultiLingualEntity<TTranslation> entity)
+            IMultiLingualEntityDto<TTranslationDto> source,
+            IMultiLingualEntity<TTranslation> destination)
             where TTranslationDto : class, IEntityTranslationDto
             where TTranslation : class, IEntityTranslation
         {
-            Check.NotNullOrEmpty(translationDtos, nameof(translationDtos));
-            Check.NotNull(entity, nameof(entity));
+            Check.NotNull(source, nameof(source));
+            Check.NotNullOrEmpty(source.Translations, nameof(source.Translations));
+            Check.NotNull(destination, nameof(destination));
 
-            foreach (var translationDto in translationDtos)
+            foreach (var translationDto in source.Translations)
             {
-                var translation = entity.Translations.FirstOrDefault(x => x.Language == translationDto.Language);
+                var translation = destination.Translations.FirstOrDefault(x => x.Language == translationDto.Language);
                 if (translation != null)
                 {
                     if (!translationDto.IsTranslatable())
                     {
                         //delete
-                        entity.Translations.Remove(translation);
+                        destination.Translations.Remove(translation);
                     }
                     else
                     {
@@ -41,7 +41,7 @@ namespace Dukkan.ObjectMapping
 
                     //insert
                     translation = mapper.Map<TTranslation>(translationDto);
-                    entity.Translations.Add(translation);
+                    destination.Translations.Add(translation);
                 }
             }
         }

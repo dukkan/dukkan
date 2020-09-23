@@ -77,8 +77,7 @@ export class CategoryAddOrEditModalComponent
       );
 
       if (existingTranslation) {
-        translation.name = existingTranslation.name;
-        translation.description = existingTranslation.description;
+        translation.init(existingTranslation);
       }
 
       return translation;

@@ -61,7 +61,7 @@ namespace Dukkan.Catalog
         {
             var entity = ObjectMapper.Map<Category>(input);
 
-            ObjectMapper.MapMultiLingualEntityTranslations(input.Translations, entity);
+            ObjectMapper.MapMultiLingualEntityTranslations(input, entity);
 
             await _categoryRepository.InsertAsync(entity);
         }
@@ -73,7 +73,7 @@ namespace Dukkan.Catalog
 
             ObjectMapper.Map(input, entity);
 
-            ObjectMapper.MapMultiLingualEntityTranslations(input.Translations, entity);
+            ObjectMapper.MapMultiLingualEntityTranslations(input, entity);
         }
 
         public async Task<PagedResultDto<CategoryListDto>> GetAllPagedAsync(CategoryGetAllPagedInput input)

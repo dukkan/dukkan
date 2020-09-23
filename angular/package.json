@@ -10,7 +10,8 @@
     "lint": "tslint --force --project src/tsconfig.json src/**/*.ts -t verbose",
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --port 4200",
-    "test": "ng test"
+    "test": "ng test",
+    "nswag": "cd nswag/ && refresh.bat"
   },
   "dependencies": {
     "@angular/animations": "^8.2.4",

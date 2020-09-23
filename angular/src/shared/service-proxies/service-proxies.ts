@@ -2210,6 +2210,7 @@ export class CategoryTranslationEditDto implements ICategoryTranslationEditDto {
     name: string | undefined;
     description: string | undefined;
     language: string | undefined;
+    id: number | undefined;
 
     constructor(data?: ICategoryTranslationEditDto) {
         if (data) {
@@ -2225,6 +2226,7 @@ export class CategoryTranslationEditDto implements ICategoryTranslationEditDto {
             this.name = _data["name"];
             this.description = _data["description"];
             this.language = _data["language"];
+            this.id = _data["id"];
         }
     }
 
@@ -2240,6 +2242,7 @@ export class CategoryTranslationEditDto implements ICategoryTranslationEditDto {
         data["name"] = this.name;
         data["description"] = this.description;
         data["language"] = this.language;
+        data["id"] = this.id;
         return data; 
     }
 
@@ -2255,6 +2258,7 @@ export interface ICategoryTranslationEditDto {
     name: string | undefined;
     description: string | undefined;
     language: string | undefined;
+    id: number | undefined;
 }
 
 export class CategoryEditDto implements ICategoryEditDto {
